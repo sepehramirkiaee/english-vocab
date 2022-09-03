@@ -1,14 +1,18 @@
 <template>
-  <div v-if="notifications" class="absolute bottom-3 w-full left-0 p-4">
+  <div v-if="notifications" class="absolute bottom-3 w-full left-0 p-4 md:w-auto">
     <transition-group name="notification" tag="div" class="flex flex-col gap-2">
       <div
-        class="p-4 bg-opacity-70 w-full rounded bg-black text-white dark:bg-white dark:text-gray-900"
+        class="py-3 px-6 w-full rounded border bg-black text-white"
         v-for="notif in notifications"
         :key="notif.id"
         @click="removeNotif(notif.id)"
-      >
-        {{ notif.message }}
-      </div>
+        :class="{
+          'border-red-500': notif.type == 'error',
+          'bg-red-50': notif.type == 'error',
+          'text-red-800': notif.type == 'error',
+        }"
+        v-html="notif.message"
+      ></div>
     </transition-group>
   </div>
 </template>

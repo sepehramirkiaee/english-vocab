@@ -4,16 +4,38 @@
       <slot></slot>
     </h3>
     <div
-      class="w-10 bg-gray-300 rounded-full h-6 shadow-inner transition duration-300"
-      :class="{ 'bg-blue-500': dark }"
+      class="
+        w-10
+        bg-gray-300
+        rounded-full
+        h-6
+        shadow-inner
+        transition
+        duration-300
+      "
+      :class="{ 'bg-blue-500': darkMode }"
+      @click="toggleDark"
     >
       <div
-        class="w-4 h-4 bg-white m-1 rounded-full shadow-md transition-all duration-300"
-        :class="{ 'ml-5': dark }"
-        @click="toggleDark"
+        class="
+          w-4
+          h-4
+          bg-white
+          m-1
+          rounded-full
+          shadow-md
+          transition-all
+          duration-300
+        "
+        :class="{ 'ml-5': darkMode }"
       ></div>
     </div>
-    <input type="checkbox" class="hidden" :checked="darkMode" @change="toggleDarkMode" />
+    <input
+      type="checkbox"
+      class="hidden"
+      :checked="darkMode"
+      @change="toggleDarkMode"
+    />
   </div>
 </template>
 
@@ -21,11 +43,6 @@
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-  data() {
-    return {
-      dark: this.darkMode,
-    };
-  },
   computed: {
     ...mapGetters(["darkMode"]),
   },
@@ -33,7 +50,6 @@ export default {
   methods: {
     ...mapActions(["toggleDarkMode"]),
     toggleDark() {
-      this.dark = !this.dark;
       this.toggleDarkMode();
     },
   },

@@ -6,6 +6,9 @@ import router from './router'
 import store from './store'
 import './assets/tailwind.css'
 
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
 import HeaderToolbar from './components/UI/HeaderToolbar.vue'
 import NotificationToast from './components/UI/NotificationToast.vue'
 import TheInput from './components/form/TheInput.vue'

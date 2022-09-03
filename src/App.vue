@@ -3,6 +3,8 @@
     <div class="w-full p-4 dark:bg-gray-900 min-h-screen">
       <router-view />
     </div>
+    <notification-toast></notification-toast>
+
   </div>
 </template>
 

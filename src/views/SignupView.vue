@@ -1,22 +1,21 @@
 <template>
-  <header-toolbar>Sign Up</header-toolbar>
-  <form @submit.prevent="submit" class="w-full flex flex-col gap-3">
-    <the-input v-model.trim="name">Name</the-input>
-    <the-input
-      placeholder="example@gmail.com"
-      v-model.trim="email"
-      >Email</the-input
-    >
-    <the-input type="password" v-model.trim="password">Password</the-input>
+  <div class="flex flex-col gap-4 md:w-1/2 md:mx-auto lg:w-1/3 xl:w-1/4">
+    <header-toolbar>Sign Up</header-toolbar>
+    <form @submit.prevent="submit" class="w-full flex flex-col gap-4">
+      <the-input v-model.trim="name">Name</the-input>
+      <the-input type="email" placeholder="alexander@domain.com" v-model.trim="email"
+        >Email</the-input
+      >
+      <the-input type="password" v-model.trim="password">Password</the-input>
 
-    <primary-button>Sign Up</primary-button>
-    <router-link
-      :to="{ name: 'login' }"
-      class="text-center border-2 border-gray-800 rounded p-2"
-      >Login</router-link
-    >
-    <notification-toast></notification-toast>
-  </form>
+      <primary-button>Sign Up</primary-button>
+
+    </form>
+    <div class="decoration-blue-500 underline-offset-2 hover:decoration-2 dark:text-gray-200">
+      <span class="text-sm">If you alreasy have account, you can </span>
+      <router-link :to="{ name: 'login' }" class="underline">Login</router-link>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -51,27 +50,31 @@ export default {
     validateForm() {
       if (this.name == "") {
         this.$store.dispatch("setNotification", {
-          message: "Name can not be empty!",
+          message: "<strong>Name</strong> can not be empty!",
+          type: "error",
         });
         return false;
       }
       if (this.email == "") {
         this.$store.dispatch("setNotification", {
-          message: "Email can not be empty!",
+          message: "<strong>Email</strong> can not be empty!",
+          type: "error",
         });
 
         return false;
       }
       if (!this.email.match(/\S+@\S+\.\S+/)) {
         this.$store.dispatch("setNotification", {
-          message: "Email format is wrong",
+          message: "<strong>Email</strong>'s format is wrong!",
+          type: "error",
         });
 
         return false;
       }
       if (this.password == "") {
         this.$store.dispatch("setNotification", {
-          message: "Password can not be empty!",
+          message: "<strong>Password</strong> can not be empty!",
+          type: "error",
         });
 
         return false;
