@@ -1,61 +1,22 @@
 <template>
-  <div class="w-full p-4">
-    <form @submit.prevent="submit" class="w-full p-2 flex flex-col gap-3">
-      <h3 class="font-bold text-xl">Sign Up</h3>
+  <header-toolbar>Sign Up</header-toolbar>
+  <form @submit.prevent="submit" class="w-full flex flex-col gap-3">
+    <the-input v-model.trim="name">Name</the-input>
+    <the-input
+      placeholder="example@gmail.com"
+      v-model.trim="email"
+      >Email</the-input
+    >
+    <the-input type="password" v-model.trim="password">Password</the-input>
 
-      <div>
-        <label>Name</label>
-        <input
-          v-model.trim="name"
-          type="text"
-          class="
-            border border-gray-300
-            w-full
-            rounded
-            p-2
-            placeholder:text-gray-300
-          "
-        />
-      </div>
-      <div>
-        <label>Email</label>
-        <input
-          v-model.trim="email"
-          type="email"
-          class="
-            border border-gray-300
-            w-full
-            rounded
-            p-2
-            placeholder:text-gray-300
-          "
-          placeholder="example@gmail.com"
-        />
-      </div>
-      <div>
-        <label>Password</label>
-        <input
-          v-model.trim="password"
-          type="password"
-          class="
-            border border-gray-300
-            w-full
-            rounded
-            p-2
-            placeholder:text-gray-300
-          "
-        />
-      </div>
-      <button type="submit" class="bg-blue-700 text-white p-2 rounded">
-        Sign Up
-      </button>
-      <router-link
-        :to="{ name: 'login' }"
-        class="text-center border-2 border-gray-800 rounded p-2"
-        >Login</router-link
-      >
-    </form>
-  </div>
+    <primary-button>Sign Up</primary-button>
+    <router-link
+      :to="{ name: 'login' }"
+      class="text-center border-2 border-gray-800 rounded p-2"
+      >Login</router-link
+    >
+    <notification-toast></notification-toast>
+  </form>
 </template>
 
 <script>
@@ -73,7 +34,11 @@ export default {
       const formValidation = this.validateForm();
       if (formValidation) {
         this.axios
-          .post('http://api.vue.com/api/register',{ name: this.name, email: this.email, password: this.password })
+          .post("http://api.vue.com/api/register", {
+            name: this.name,
+            email: this.email,
+            password: this.password,
+          })
           .then((response) => {
             console.log(response);
           })
@@ -85,12 +50,30 @@ export default {
 
     validateForm() {
       if (this.name == "") {
+        this.$store.dispatch("setNotification", {
+          message: "Name can not be empty!",
+        });
         return false;
       }
       if (this.email == "") {
+        this.$store.dispatch("setNotification", {
+          message: "Email can not be empty!",
+        });
+
+        return false;
+      }
+      if (!this.email.match(/\S+@\S+\.\S+/)) {
+        this.$store.dispatch("setNotification", {
+          message: "Email format is wrong",
+        });
+
         return false;
       }
       if (this.password == "") {
+        this.$store.dispatch("setNotification", {
+          message: "Password can not be empty!",
+        });
+
         return false;
       }
       return true;
