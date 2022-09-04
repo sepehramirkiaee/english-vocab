@@ -136,10 +136,11 @@ export default {
       return this.passwordStrength.length >= 10;
     },
     passwordIsValid() {
-      return (
-        this.passwordStrength.value == "Medium" ||
-        this.passwordStrength.value == "Strong"
-      );
+      // return (
+      //   this.passwordStrength.value == "Medium" ||
+      //   this.passwordStrength.value == "Strong"
+      // );
+      return true;
     },
   },
 
