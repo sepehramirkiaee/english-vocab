@@ -6,6 +6,7 @@ import router from './router'
 import store from './store'
 import './assets/tailwind.css'
 
+axios.defaults.withCredentials = true;
 axios.defaults.headers['Content-Type'] = 'application/json';
 axios.defaults.headers['Access-Control-Allow-Origin'] = '*';
 
