@@ -149,11 +149,12 @@ export default {
       const formValidation = this.validateForm();
       if (formValidation) {
         this.axios
-          .post("http://127.0.0.1:8000/register", {
+          .post("http://localhost:8000/register", {
             name: this.name,
             email: this.email,
             password: this.password,
           })
+          // .get('../sampleData/login.json')
           .then((response) => {
             console.log(response);
           })
