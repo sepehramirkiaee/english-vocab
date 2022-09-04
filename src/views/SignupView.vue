@@ -149,7 +149,7 @@ export default {
       const formValidation = this.validateForm();
       if (formValidation) {
         this.axios
-          .post("http://localhost:8000/register", {
+          .post("http://localhost:8000/api/register", {
             name: this.name,
             email: this.email,
             password: this.password,
