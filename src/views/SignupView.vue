@@ -3,15 +3,77 @@
     <header-toolbar>Sign Up</header-toolbar>
     <form @submit.prevent="submit" class="w-full flex flex-col gap-4">
       <the-input v-model.trim="name">Name</the-input>
-      <the-input type="email" placeholder="alexander@domain.com" v-model.trim="email"
+      <the-input
+        type="email"
+        placeholder="alexander@domain.com"
+        v-model.trim="email"
         >Email</the-input
       >
-      <the-input type="password" v-model.trim="password">Password</the-input>
+      <the-input @input="checkStrength" type="password" v-model.trim="password"
+        ><span class="flex justify-between items-center">
+          Password<span
+            v-if="passwordStrength.value"
+            :class="{
+              'bg-green-700': passwordIsValid,
+              'bg-red-500': !passwordIsValid,
+            }"
+            class="text-white px-1 text-xs rounded"
+            >{{ passwordStrength.value }}</span
+          ></span
+        ></the-input
+      >
+      <div>
+        <div class="flex items-center">
+          <span
+            :class="{ 'text-green-600 dark:text-green-400': containsLowercase }"
+            class="material-symbols-outlined text-sm mr-2"
+            >check_circle</span
+          ><span class="text-xs dark:text-gray-400">Contains Lowercase</span>
+        </div>
+        <div class="flex items-center">
+          <span
+            :class="{ 'text-green-600 dark:text-green-400': containsUppercase }"
+            class="material-symbols-outlined text-sm mr-2"
+            >check_circle</span
+          ><span class="text-xs dark:text-gray-400">Contains Uppercase</span>
+        </div>
+        <div class="flex items-center">
+          <span
+            :class="{ 'text-green-600 dark:text-green-400': containsNumber }"
+            class="material-symbols-outlined text-sm mr-2"
+            >check_circle</span
+          ><span class="text-xs dark:text-gray-400">Contains Number</span>
+        </div>
+        <div class="flex items-center">
+          <span
+            :class="{ 'text-green-600 dark:text-green-400': containsSymbol }"
+            class="material-symbols-outlined text-sm mr-2"
+            >check_circle</span
+          ><span class="text-xs dark:text-gray-400"
+            >Contains Special Character</span
+          >
+        </div>
+        <div class="flex items-center">
+          <span
+            :class="{ 'text-green-600 dark:text-green-400': containsTen }"
+            class="material-symbols-outlined text-sm mr-2"
+            >check_circle</span
+          ><span class="text-xs dark:text-gray-400"
+            >Contains at least 10 Character</span
+          >
+        </div>
+      </div>
 
       <primary-button>Sign Up</primary-button>
-
     </form>
-    <div class="decoration-blue-500 underline-offset-2 hover:decoration-2 dark:text-gray-200">
+    <div
+      class="
+        decoration-blue-500
+        underline-offset-2
+        hover:decoration-2
+        dark:text-gray-200
+      "
+    >
       <span class="text-sm">If you alreasy have account, you can </span>
       <router-link :to="{ name: 'login' }" class="underline">Login</router-link>
     </div>
@@ -19,13 +81,66 @@
 </template>
 
 <script>
+import { passwordStrength } from "check-password-strength";
+
 export default {
   data() {
     return {
       name: "",
       email: "",
       password: "",
+      passwordStrength: { contains: [] },
+      customPassword: [
+        {
+          id: 0,
+          value: "Too weak",
+          minDiversity: 0,
+          minLength: 0,
+        },
+        {
+          id: 1,
+          value: "Weak",
+          minDiversity: 2,
+          minLength: 6,
+        },
+        {
+          id: 2,
+          value: "Medium",
+          minDiversity: 3,
+          minLength: 10,
+        },
+        {
+          id: 3,
+          value: "Strong",
+          minDiversity: 3,
+          minLength: 12,
+        },
+      ],
     };
+  },
+
+  computed: {
+    containsLowercase() {
+      return this.passwordStrength.contains.includes("lowercase");
+    },
+    containsUppercase() {
+      return this.passwordStrength.contains.includes("uppercase");
+    },
+    containsNumber() {
+      return this.passwordStrength.contains.includes("number");
+    },
+    containsSymbol() {
+      return this.passwordStrength.contains.includes("symbol");
+    },
+    containsTen() {
+      return this.passwordStrength.length >= 10;
+    },
+    passwordIsValid() {
+      return (
+        this.passwordStrength.value == "Medium" ||
+        this.passwordStrength.value == "Strong"
+      );
+    },
   },
 
   methods: {
@@ -79,7 +194,24 @@ export default {
 
         return false;
       }
+
+      if (!this.passwordIsValid) {
+        this.$store.dispatch("setNotification", {
+          message: "<strong>Password</strong> is not strong enough!",
+          type: "error",
+        });
+
+        return false;
+      }
       return true;
+    },
+
+    checkStrength() {
+      this.passwordStrength = passwordStrength(
+        this.password,
+        this.customPassword
+      );
+      console.log(this.passwordStrength);
     },
   },
 };
