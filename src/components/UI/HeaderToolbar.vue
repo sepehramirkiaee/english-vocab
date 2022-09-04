@@ -1,5 +1,7 @@
 <template>
   <div class="flex justify-between items-center">
+    <span class="material-symbols-outlined dark:text-white">menu</span>
+    <user-menu></user-menu>
     <h3 class="font-bold text-xl my-4 dark:text-white">
       <slot></slot>
     </h3>
@@ -41,8 +43,17 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import UserMenu from "./UserMenu.vue";
 
 export default {
+  components: {
+    UserMenu,
+  },
+
+  data(){
+    
+  },
+
   computed: {
     ...mapGetters(["darkMode"]),
   },
@@ -53,5 +64,6 @@ export default {
       this.toggleDarkMode();
     },
   },
+
 };
 </script>

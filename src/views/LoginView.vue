@@ -83,5 +83,12 @@ export default {
       return true;
     },
   },
+
+  beforeMount() {
+    const userAuth = this.$store.getters.getAuthStatus;
+    if (userAuth) {
+      this.$router.push({ name: "vocab" });
+    }
+  },
 };
 </script>

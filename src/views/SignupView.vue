@@ -149,14 +149,15 @@ export default {
       const formValidation = this.validateForm();
       if (formValidation) {
         this.axios
-          .post("http://localhost:8000/register", {
+          .post("http://localhost:8000/api/register", {
             name: this.name,
             email: this.email,
             password: this.password,
           })
-          // .get('../sampleData/login.json')
-          .then((response) => {
-            console.log(response);
+          // .get("../sampleData/login.json")
+          .then(() => {
+            this.$store.dispatch("setAuthentication");
+            this.$router.push({ name: "vocab" });
           })
           .catch((error) => {
             console.log(error);
@@ -213,8 +214,14 @@ export default {
         this.password,
         this.customPassword
       );
-      console.log(this.passwordStrength);
     },
+  },
+
+  beforeMount() {
+    const userAuth = this.$store.getters.getAuthStatus;
+    if (userAuth) {
+      this.$router.push({ name: "vocab" });
+    }
   },
 };
 </script>
