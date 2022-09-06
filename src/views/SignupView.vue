@@ -148,16 +148,26 @@ export default {
     submit() {
       const formValidation = this.validateForm();
       if (formValidation) {
+        this.axios.get("/sanctum/csrf-cookie").then((response) => {
+          console.log(response);
+        });
         this.axios
           .post("http://localhost:8000/api/register", {
             name: this.name,
             email: this.email,
             password: this.password,
           })
-          // .get("../sampleData/login.json")
-          .then(() => {
-            this.$store.dispatch("setAuthentication");
-            this.$router.push({ name: "vocab" });
+          .get("../sampleData/login.json")
+          .then((response) => {
+            if (response.status == 200) {
+              this.$store.dispatch("setAuthentication");
+              this.$router.push({ name: "vocab" });
+            } else {
+              this.$store.dispatch("setNotification", {
+                message: "Something went wrong!",
+                type: "error",
+              });
+            }
           })
           .catch((error) => {
             console.log(error);

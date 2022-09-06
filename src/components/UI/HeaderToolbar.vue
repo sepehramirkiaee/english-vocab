@@ -1,7 +1,14 @@
 <template>
   <div class="flex justify-between items-center">
-    <span class="material-symbols-outlined dark:text-white">menu</span>
-    <user-menu></user-menu>
+    <span
+      v-if="getAuthStatus"
+      class="material-symbols-outlined dark:text-white"
+      @click="toggleMenu"
+      >menu</span
+    >
+    <transition name="menu">
+      <user-menu @toggleMenu="toggleMenu" v-if="showUserMenu"></user-menu>
+    </transition>
     <h3 class="font-bold text-xl my-4 dark:text-white">
       <slot></slot>
     </h3>
@@ -50,12 +57,14 @@ export default {
     UserMenu,
   },
 
-  data(){
-    
+  data() {
+    return {
+      showUserMenu: false,
+    };
   },
 
   computed: {
-    ...mapGetters(["darkMode"]),
+    ...mapGetters(["darkMode", "getAuthStatus"]),
   },
 
   methods: {
@@ -63,7 +72,22 @@ export default {
     toggleDark() {
       this.toggleDarkMode();
     },
-  },
 
+    toggleMenu() {
+      this.showUserMenu = !this.showUserMenu;
+    },
+  },
 };
 </script>
+
+<style>
+.menu-enter-active,
+.menu-leave-active {
+  @apply transition-all;
+}
+
+.menu-enter-from,
+.menu-leave-to {
+  @apply -translate-x-full;
+}
+</style>

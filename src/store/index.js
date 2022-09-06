@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import notificationModule from './notification.js'
 import userModule from './user.js'
+import vocabModule from './vocab.js'
 
 export default createStore({
   state: {
@@ -23,6 +24,7 @@ export default createStore({
   },
   modules: {
     notification: notificationModule,
-    user: userModule
+    user: userModule,
+    vocab: vocabModule
   }
 })
