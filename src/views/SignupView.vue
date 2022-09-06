@@ -157,7 +157,7 @@ export default {
             email: this.email,
             password: this.password,
           })
-          .get("../sampleData/login.json")
+          // .get("../sampleData/login.json")
           .then((response) => {
             if (response.status == 200) {
               this.$store.dispatch("setAuthentication");
