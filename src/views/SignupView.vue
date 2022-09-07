@@ -148,7 +148,7 @@ export default {
     submit() {
       const formValidation = this.validateForm();
       if (formValidation) {
-        this.axios.get("http://localhost:8000/sanctum/csrf-cookie").then((response) => {
+        this.axios.get("http://localhost:8000/api/sanctum/csrf-cookie").then((response) => {
           console.log(response);
         });
         this.axios
