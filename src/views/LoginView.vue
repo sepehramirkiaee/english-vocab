@@ -42,9 +42,12 @@ export default {
       const formValidation = this.validateForm();
       if (formValidation) {
         this.axios
-          .post("http://localhost:8000/api/login", {
-            email: this.email,
-            password: this.password,
+          .get("http://localhost:8000/sanctum/csrf-cookie")
+          .then(() => {
+            this.axios.post("http://localhost:8000/api/login", {
+              email: this.email,
+              password: this.password,
+            });
           })
           // .get("../sampleData/login.json")
           .then((response) => {

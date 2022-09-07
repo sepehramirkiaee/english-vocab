@@ -22,9 +22,7 @@
           ></span
         ></the-input
       >
-      <the-input
-        type="password"
-        v-model.trim="passwordConfirmation"
+      <the-input type="password" v-model.trim="passwordConfirmation"
         >Confirm Password</the-input
       >
       <div>
@@ -154,15 +152,15 @@ export default {
     submit() {
       const formValidation = this.validateForm();
       if (formValidation) {
-        this.axios.get("http://localhost:8000/sanctum/csrf-cookie").then((response) => {
-          console.log(response);
-        });
         this.axios
-          .post("http://localhost:8000/api/register", {
-            name: this.name,
-            email: this.email,
-            password: this.password,
-            password_confirmation: this.passwordConfirmation,
+          .get("http://localhost:8000/sanctum/csrf-cookie")
+          .then(() => {
+            this.axios.post("http://localhost:8000/api/register", {
+              name: this.name,
+              email: this.email,
+              password: this.password,
+              password_confirmation: this.passwordConfirmation,
+            });
           })
           // .get("../sampleData/login.json")
           .then((response) => {
@@ -242,6 +240,5 @@ export default {
       );
     },
   },
-
 };
 </script>
