@@ -51,8 +51,12 @@
     <div class="flex flex-col grow">
       <div class="flex grow gap-2">
         <transition-group name="slide">
-            <meaning-item :meaning="item" ref="item" v-if="showMainItem"></meaning-item>
-            <meaning-item :meaning="item" v-else></meaning-item>
+          <meaning-item
+            :meaning="item"
+            ref="item"
+            v-if="showMainItem"
+          ></meaning-item>
+          <meaning-item :meaning="itemNext" v-else></meaning-item>
         </transition-group>
       </div>
       <div class="flex my-4 gap-2">
@@ -144,7 +148,7 @@ export default {
   data() {
     return {
       index: 0,
-      showMainItem: true
+      showMainItem: true,
     };
   },
 
@@ -157,6 +161,14 @@ export default {
       return this.vocabList[this.index];
     },
 
+    itemNext() {
+      if (this.vocabList[this.index + 1]) {
+        return this.vocabList[this.index + 1];
+      } else {
+        return false;
+      }
+    },
+
     percent() {
       return ((this.index + 1) * 100) / this.vocabList.length;
     },
@@ -165,8 +177,11 @@ export default {
   methods: {
     next() {
       if (this.index + 1 < this.vocabList.length) {
-        this.showMainItem = false
-        // this.index++;
+        this.showMainItem = false;
+        setTimeout(() => {
+          this.index++;
+          this.showMainItem = true;
+        }, 300);
         this.$refs.item.reset();
       } else {
         this.$router.push({ name: "vocab" });
@@ -189,12 +204,12 @@ export default {
 </script>
 
 <style>
-    .slide-enter-to,
-    .slide-leave-to{
-        @apply -translate-x-1/2
-    }
-    .slide-enter-active,
-    .slide-leave-active{
-        @apply transition-all
-    }
+.slide-enter-to,
+.slide-leave-to {
+  @apply -translate-x-full;
+}
+.slide-enter-active,
+.slide-leave-active {
+  @apply transition-all duration-300;
+}
 </style>
