@@ -42,11 +42,11 @@ export default {
       const formValidation = this.validateForm();
       if (formValidation) {
         this.axios
-          // .post("http://127.0.0.1:8000/login", {
-          //   email: this.email,
-          //   password: this.password,
-          // })
-          .get("../sampleData/login.json")
+          .post("http://127.0.0.1:8000/login", {
+            email: this.email,
+            password: this.password,
+          })
+          // .get("../sampleData/login.json")
           .then((response) => {
             if (response.status == 200) {
               this.$store.dispatch("setAuthentication");

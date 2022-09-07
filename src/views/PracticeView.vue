@@ -63,87 +63,39 @@
         <div
           @click="next"
           class="
-            p-1
             bg-rose-200
-            grow
-            text-center
-            shadow-sm
-            rounded-md
-            select-none
             dark:bg-rose-800
             active:dark:bg-rose-900
-            transition-all
-            duration-75
-            active:scale-95
+            btn-action
           "
         >
-          <span
-            class="
-              material-symbols-outlined
-              text-5xl
-              leading-tight
-              text-rose-800
-              dark:text-rose-200
-            "
-          >
+          <span class="btn-icon material-symbols-outlined text-rose-800 dark:text-rose-200">
             sentiment_dissatisfied
           </span>
         </div>
         <div
           @click="next"
           class="
-            p-1
+            btn-action
             bg-cyan-200
-            grow
-            text-center
-            shadow-sm
-            rounded-md
-            select-none
             dark:bg-cyan-700
             active:dark:bg-cyan-900
-            transition-all
-            duration-75
-            active:scale-95
           "
         >
-          <span
-            class="
-              material-symbols-outlined
-              text-5xl
-              leading-tight
-              text-cyan-700
-              dark:text-cyan-200
-            "
-          >
+          <span class="btn-icon material-symbols-outlined text-cyan-700 dark:text-cyan-200">
             sentiment_neutral
           </span>
         </div>
         <div
           @click="next"
           class="
-            p-1
+            btn-action
             bg-lime-200
-            grow
-            text-center
-            shadow-sm
-            rounded-md
-            select-none
             dark:bg-lime-600
             active:dark:bg-lime-900
-            transition-all
-            duration-75
-            active:scale-95
           "
         >
-          <span
-            class="
-              material-symbols-outlined
-              text-5xl
-              leading-tight
-              text-lime-700
-              dark:text-lime-200
-            "
-          >
+          <span class="btn-icon material-symbols-outlined text-lime-700 dark:text-lime-200">
             sentiment_satisfied
           </span>
         </div>
@@ -223,14 +175,10 @@ export default {
 }
 
 .btn-action {
-  @apply p-1
-            grow
-            text-center
-            shadow-sm
-            rounded-md
-            select-none
-            transition-all
-            duration-75
-            active:scale-95;
+  @apply p-1 grow text-center shadow-sm rounded-md select-none transition-all duration-75 active:scale-95;
+}
+
+.btn-icon {
+  @apply text-5xl leading-tight;
 }
 </style>
