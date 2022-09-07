@@ -42,7 +42,7 @@ export default {
       const formValidation = this.validateForm();
       if (formValidation) {
         this.axios
-          .post("http://127.0.0.1:8000/login", {
+          .post("http://127.0.0.1:8000/api/login", {
             email: this.email,
             password: this.password,
           })
