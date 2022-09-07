@@ -22,7 +22,7 @@
         transition
         duration-300
       "
-      :class="{ 'bg-blue-500': darkMode }"
+      :class="{ '!bg-blue-500': darkMode }"
       @click="toggleDarkMode"
     >
       <div
