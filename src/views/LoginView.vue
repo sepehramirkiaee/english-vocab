@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-4 md:w-1/2 md:mx-auto lg:w-1/3 xl:w-1/4">
+  <div class="flex flex-col gap-4 md:w-1/2 md:mx-auto lg:w-1/3 xl:w-1/4 p-4">
     <header-toolbar>Login</header-toolbar>
 
     <form @submit.prevent="login" class="w-full flex flex-col gap-4">
@@ -42,12 +42,21 @@ export default {
       const formValidation = this.validateForm();
       if (formValidation) {
         this.axios
-          .post("http://127.0.0.1:8000/login", {
-            email: this.email,
-            password: this.password,
-          })
+          // .post("http://127.0.0.1:8000/login", {
+          //   email: this.email,
+          //   password: this.password,
+          // })
+          .get("../sampleData/login.json")
           .then((response) => {
-            console.log(response);
+            if (response.status == 200) {
+              this.$store.dispatch("setAuthentication");
+              this.$router.push({ name: "vocab" });
+            } else {
+              this.$store.dispatch("setNotification", {
+                message: "Something went wrong!",
+                type: "error",
+              });
+            }
           })
           .catch((error) => {
             console.log(error);
@@ -82,13 +91,6 @@ export default {
       }
       return true;
     },
-  },
-
-  beforeMount() {
-    const userAuth = this.$store.getters.getAuthStatus;
-    if (userAuth) {
-      this.$router.push({ name: "vocab" });
-    }
   },
 };
 </script>

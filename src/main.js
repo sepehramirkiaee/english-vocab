@@ -14,6 +14,7 @@ import HeaderToolbar from './components/UI/HeaderToolbar.vue'
 import NotificationToast from './components/UI/NotificationToast.vue'
 import TheInput from './components/form/TheInput.vue'
 import PrimaryButton from './components/form/PrimaryButton.vue'
+import './registerServiceWorker'
 
 const app = createApp(App)
 app.component('HeaderToolbar', HeaderToolbar)

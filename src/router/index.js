@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '../store/index.js'
 import LoginView from '../views/LoginView.vue'
 import SignupView from '../views/SignupView.vue'
 import VocabView from '../views/VocabView.vue'
 import MeaningView from '../views/MeaningView.vue'
+import PracticeView from '../views/PracticeView.vue'
 const routes = [
   {
     path: '/',
@@ -49,12 +51,36 @@ const routes = [
     meta: {
       needAuth: true
     },
+  },
+  {
+    path: '/learn/vocab/practice',
+    name: 'practice',
+    component: PracticeView,
+    meta: {
+      needAuth: true
+    },
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, _, next) => {
+
+  const userAuth = store.getters.getAuthStatus;
+  if (to.meta.needAuth && !userAuth) {
+    next({ name: 'login' })
+  }
+  else if(to.meta.redirectIfAuth && userAuth){
+    next({ name: 'vocab' })
+  }
+  else {
+    next()
+  }
+
+  
 })
 
 export default router

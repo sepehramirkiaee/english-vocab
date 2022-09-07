@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-4 md:w-1/2 md:mx-auto lg:w-1/3 xl:w-1/4">
+  <div class="flex flex-col gap-4 md:w-1/2 md:mx-auto lg:w-1/3 xl:w-1/4 p-4">
     <header-toolbar>Vocabulary</header-toolbar>
     <div
       v-if="meaning"
@@ -44,7 +44,7 @@ export default {
     this.meaning = this.$store.getters.getVocabById(this.id);
     console.log(this.meaning)
     if (!this.meaning) {
-      this.axios.get("/sampleData/meaning.jsn").then((response) => {
+      this.axios.get("/sampleData/meaning.json").then((response) => {
         console.log(response)
         if (response.status == 200) {
           if (response.data) {

@@ -1,10 +1,29 @@
 <template>
-  <div class="flex flex-col gap-4 md:w-1/2 md:mx-auto lg:w-1/3 xl:w-1/4">
+  <div class="flex flex-col gap-4 md:w-1/2 md:mx-auto lg:w-1/3 xl:w-1/4 p-4">
     <header-toolbar>Vocabulary</header-toolbar>
-    <div>
+    <router-link :to="{ name: 'practice' }">
+      <div
+        class="
+          text-center
+          p-4
+          bg-lime-500
+          text-white
+          font-bold
+          rounded-md
+          shadow-sm
+          dark:bg-lime-600
+        "
+      >
+        Start Practicing
+      </div>
+    </router-link>
+    <div
+      v-if="vocab"
+      class="border-t pt-4 flex flex-col gap-4 dark:border-gray-500"
+    >
       <list-item v-for="item in vocab" :key="item.id" :item="item"></list-item>
     </div>
-    <div v-if="!vocab" class="flex flex-col gap-8 justify-center items-center">
+    <div v-else class="flex flex-col gap-8 justify-center items-center">
       <img
         class="w-2/3 opacity-90"
         src="../assets/illustration/empty_list.svg"
@@ -34,13 +53,6 @@ export default {
 
   methods: {
     ...mapActions(["setVocabList"]),
-  },
-
-  beforeMount() {
-    const userAuth = this.$store.getters.getAuthStatus;
-    if (!userAuth) {
-      this.$router.push({ name: "login" });
-    }
   },
 
   mounted() {

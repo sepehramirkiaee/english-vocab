@@ -15,11 +15,20 @@ export default createStore({
   mutations: {
     toggleDarkMode(state) {
       state.darkMode = !state.darkMode
+      localStorage.setItem("darkMode", state.darkMode)
+    },
+
+    setDarkMode(state, payload) {
+      state.darkMode = payload
     }
   },
   actions: {
     toggleDarkMode(context) {
       context.commit('toggleDarkMode');
+    },
+
+    setDarkMode(context, payload) {
+      context.commit('setDarkMode', (payload === 'true'))
     }
   },
   modules: {

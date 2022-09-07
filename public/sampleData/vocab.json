@@ -16,5 +16,47 @@
                 "sample": "so my physiotherapist recommended I work on core strength."
             }
         ]
+    },
+    {
+        "id": 123456789012,
+        "title": "take",
+        "meaning": [
+            {
+                "id": 123,
+                "type": "verb",
+                "meaning": "carry",
+                "sample": "Remember to take your coat when you leave."
+            },
+            {
+                "id": 456,
+                "type": "verb",
+                "meaning": "photograph",
+                "sample": "to take a picture/photo/shot of somebody/something"
+            },
+            {
+                "id": 789,
+                "type": "verb",
+                "meaning": "reach and hold",
+                "sample": "I passed him the rope and he took it."
+            },
+            {
+                "id": 901,
+                "type": "verb",
+                "meaning": "remove",
+                "sample": "Will you take your books off the table?"
+            }
+        ]
+    },
+    {
+        "id": 12345678901,
+        "title": "susceptible",
+        "meaning": [
+            {
+                "id": 456,
+                "type": "adjective",
+                "meaning": "capable or admitting of",
+                "sample": "the problem is not susceptible of a simple solution"
+            }
+        ]
     }
 ]

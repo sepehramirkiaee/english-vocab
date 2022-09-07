@@ -2,7 +2,7 @@
   <div class="flex justify-between items-center">
     <span
       v-if="getAuthStatus"
-      class="material-symbols-outlined dark:text-white"
+      class="material-symbols-outlined dark:text-white w-10"
       @click="toggleMenu"
       >menu</span
     >
@@ -23,7 +23,7 @@
         duration-300
       "
       :class="{ 'bg-blue-500': darkMode }"
-      @click="toggleDark"
+      @click="toggleDarkMode"
     >
       <div
         class="
@@ -69,9 +69,6 @@ export default {
 
   methods: {
     ...mapActions(["toggleDarkMode"]),
-    toggleDark() {
-      this.toggleDarkMode();
-    },
 
     toggleMenu() {
       this.showUserMenu = !this.showUserMenu;
