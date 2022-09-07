@@ -8,6 +8,7 @@
       xl:w-1/4
       h-screen
       p-4
+      overflow-hidden
     "
   >
     <header-toolbar>Review</header-toolbar>
@@ -50,14 +51,13 @@
     </div>
     <div class="flex flex-col grow">
       <div class="flex grow gap-2">
-        <transition-group name="slide">
+        <transition name="slide">
           <meaning-item
             :meaning="item"
             ref="item"
             v-if="showMainItem"
           ></meaning-item>
-          <meaning-item :meaning="itemNext" v-else></meaning-item>
-        </transition-group>
+        </transition>
       </div>
       <div class="flex my-4 gap-2">
         <div
@@ -161,14 +161,6 @@ export default {
       return this.vocabList[this.index];
     },
 
-    itemNext() {
-      if (this.vocabList[this.index + 1]) {
-        return this.vocabList[this.index + 1];
-      } else {
-        return false;
-      }
-    },
-
     percent() {
       return ((this.index + 1) * 100) / this.vocabList.length;
     },
@@ -204,12 +196,17 @@ export default {
 </script>
 
 <style>
-.slide-enter-to,
 .slide-leave-to {
   @apply -translate-x-full;
 }
-.slide-enter-active,
-.slide-leave-active {
+.slide-enter-from{
+    @apply translate-x-full
+}
+.slide-enter-to{
+    @apply translate-x-0
+}
+.slide-leave-active,
+.slide-enter-active {
   @apply transition-all duration-300;
 }
 </style>

@@ -22,6 +22,11 @@
           ></span
         ></the-input
       >
+      <the-input
+        type="password"
+        v-model.trim="passwordConfirmation"
+        >Retype Password</the-input
+      >
       <div>
         <div class="flex items-center">
           <span
@@ -89,6 +94,7 @@ export default {
       name: "",
       email: "",
       password: "",
+      passwordConfirmation: "",
       passwordStrength: { contains: [] },
       customPassword: [
         {
@@ -156,6 +162,7 @@ export default {
             name: this.name,
             email: this.email,
             password: this.password,
+            'password-confirmation': this.passwordConfirmation,
           })
           // .get("../sampleData/login.json")
           .then((response) => {
@@ -202,6 +209,15 @@ export default {
       if (this.password == "") {
         this.$store.dispatch("setNotification", {
           message: "<strong>Password</strong> can not be empty!",
+          type: "error",
+        });
+
+        return false;
+      }
+
+      if (this.passwordConfirmation == "") {
+        this.$store.dispatch("setNotification", {
+          message: "<strong>Password confirm</strong> can not be empty!",
           type: "error",
         });
 
