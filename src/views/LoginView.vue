@@ -20,7 +20,7 @@
         dark:text-gray-200
       "
     >
-      <span class="text-sm">If you don't have accoutn, you can </span>
+      <span class="text-sm">If you don't have account, you can </span>
       <router-link :to="{ name: 'signup' }" class="underline"
         >Sign up</router-link
       >
