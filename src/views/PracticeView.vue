@@ -71,6 +71,10 @@
             rounded-md
             select-none
             dark:bg-rose-800
+            active:dark:bg-rose-900
+            transition-all
+            duration-75
+            active:scale-95
           "
         >
           <span
@@ -96,6 +100,10 @@
             rounded-md
             select-none
             dark:bg-cyan-700
+            active:dark:bg-cyan-900
+            transition-all
+            duration-75
+            active:scale-95
           "
         >
           <span
@@ -121,6 +129,10 @@
             rounded-md
             select-none
             dark:bg-lime-600
+            active:dark:bg-lime-900
+            transition-all
+            duration-75
+            active:scale-95
           "
         >
           <span
@@ -199,14 +211,26 @@ export default {
 .slide-leave-to {
   @apply -translate-x-full;
 }
-.slide-enter-from{
-    @apply translate-x-full
+.slide-enter-from {
+  @apply translate-x-full;
 }
-.slide-enter-to{
-    @apply translate-x-0
+.slide-enter-to {
+  @apply translate-x-0;
 }
 .slide-leave-active,
 .slide-enter-active {
   @apply transition-all duration-300;
+}
+
+.btn-action {
+  @apply p-1
+            grow
+            text-center
+            shadow-sm
+            rounded-md
+            select-none
+            transition-all
+            duration-75
+            active:scale-95;
 }
 </style>

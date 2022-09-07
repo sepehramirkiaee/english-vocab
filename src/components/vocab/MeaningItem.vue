@@ -53,11 +53,12 @@
           rounded-md
           bg-white
           dark:bg-gray-700
+          whitespace-nowrap
         "
         @click="show"
       >
-        <span class="material-symbols-outlined"> visibility </span
-        ><span>Show</span>
+        <span class="material-symbols-outlined">visibility</span
+        ><span>Show Meaning</span>
       </div>
     </transition>
   </div>

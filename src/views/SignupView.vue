@@ -25,7 +25,7 @@
       <the-input
         type="password"
         v-model.trim="passwordConfirmation"
-        >Retype Password</the-input
+        >Confirm Password</the-input
       >
       <div>
         <div class="flex items-center">
@@ -162,7 +162,7 @@ export default {
             name: this.name,
             email: this.email,
             password: this.password,
-            'password-confirmation': this.passwordConfirmation,
+            password_confirmation: this.passwordConfirmation,
           })
           // .get("../sampleData/login.json")
           .then((response) => {
