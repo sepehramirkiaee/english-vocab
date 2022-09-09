@@ -153,27 +153,29 @@ export default {
       const formValidation = this.validateForm();
       if (formValidation) {
         this.axios
-          .get("http://localhost:8000/sanctum/csrf-cookie")
+          .get("/sanctum/csrf-cookie")
           .then(() => {
-            this.axios.post("http://localhost:8000/api/register", {
-              name: this.name,
-              email: this.email,
-              password: this.password,
-              password_confirmation: this.passwordConfirmation,
-            });
+            this.axios
+              .post("/register", {
+                name: this.name,
+                email: this.email,
+                password: this.password,
+                password_confirmation: this.passwordConfirmation,
+              })
+              .then((response) => {
+                if (response.status == 201) {
+                  this.$store.dispatch("setAuthentication");
+                  this.$router.push({ name: "vocab" });
+                } else {
+                  this.$store.dispatch("setNotification", {
+                    message: "Something went wrong!",
+                    type: "error",
+                  });
+                }
+              });
           })
           // .get("../sampleData/login.json")
-          .then((response) => {
-            if (response.status == 200) {
-              this.$store.dispatch("setAuthentication");
-              this.$router.push({ name: "vocab" });
-            } else {
-              this.$store.dispatch("setNotification", {
-                message: "Something went wrong!",
-                type: "error",
-              });
-            }
-          })
+
           .catch((error) => {
             console.log(error);
           });

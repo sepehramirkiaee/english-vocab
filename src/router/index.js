@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '../store/index.js'
 import LoginView from '../views/LoginView.vue'
+import LogoutView from '../views/LogoutView.vue'
 import SignupView from '../views/SignupView.vue'
 import VocabView from '../views/VocabView.vue'
 import MeaningView from '../views/MeaningView.vue'
@@ -17,6 +18,11 @@ const routes = [
     meta: {
       redirectIfAuth: true
     }
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: LogoutView,
   },
   {
     path: '/signup',
@@ -73,14 +79,13 @@ router.beforeEach((to, _, next) => {
   if (to.meta.needAuth && !userAuth) {
     next({ name: 'login' })
   }
-  else if(to.meta.redirectIfAuth && userAuth){
+  else if (to.meta.redirectIfAuth && userAuth) {
     next({ name: 'vocab' })
   }
   else {
     next()
   }
 
-  
 })
 
 export default router

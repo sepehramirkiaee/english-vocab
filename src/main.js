@@ -7,7 +7,8 @@ import store from './store'
 import './assets/tailwind.css'
 
 axios.defaults.withCredentials = true;
-axios.defaults.headers['Content-Type'] = 'application/json';
+axios.defaults.baseURL = 'http://localhost:8088';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers['Access-Control-Allow-Origin'] = '*';
 
 import HeaderToolbar from './components/UI/HeaderToolbar.vue'

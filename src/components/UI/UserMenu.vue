@@ -22,8 +22,10 @@ export default {
 
   methods: {
     logout() {
-      this.$store.dispatch("unsetAuthentication");
-      this.$router.push({ name: "login" });
+      this.axios.post("/logout").then(() => {
+        this.$store.dispatch("unsetAuthentication");
+        this.$router.push({ name: "login" });
+      });
     },
   },
 };

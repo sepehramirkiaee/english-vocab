@@ -23,6 +23,7 @@ export default {
     if (localStorage.darkMode) {
       this.setDarkMode(localStorage.darkMode);
     }
-  },
+  }
+
 };
 </script>

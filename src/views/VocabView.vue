@@ -56,7 +56,7 @@ export default {
   },
 
   mounted() {
-    this.axios.get("/sampleData/vocab.json").then((response) => {
+    this.axios.get("http://localhost:8080/sampleData/vocab.json").then((response) => {
       if (response.status == 200) {
         if (response.data) {
           this.setVocabList(response.data);

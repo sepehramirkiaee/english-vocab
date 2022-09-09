@@ -42,24 +42,24 @@ export default {
       const formValidation = this.validateForm();
       if (formValidation) {
         this.axios
-          .get("http://localhost:8000/sanctum/csrf-cookie")
+          .get("/sanctum/csrf-cookie")
           .then(() => {
-            this.axios.post("http://localhost:8000/api/login", {
-              email: this.email,
-              password: this.password,
-            });
-          })
-          // .get("../sampleData/login.json")
-          .then((response) => {
-            if (response.status == 200) {
-              this.$store.dispatch("setAuthentication");
-              this.$router.push({ name: "vocab" });
-            } else {
-              this.$store.dispatch("setNotification", {
-                message: "Something went wrong!",
-                type: "error",
+            this.axios
+              .post("/login", {
+                email: this.email,
+                password: this.password,
+              })
+              .then((response) => {
+                if (response.status == 200) {
+                  this.$store.dispatch("setAuthentication");
+                  this.$router.push({ name: "vocab" });
+                } else {
+                  this.$store.dispatch("setNotification", {
+                    message: "Something went wrong!",
+                    type: "error",
+                  });
+                }
               });
-            }
           })
           .catch((error) => {
             console.log(error);
