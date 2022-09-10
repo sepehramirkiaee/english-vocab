@@ -6,6 +6,7 @@ import SignupView from '../views/SignupView.vue'
 import VocabView from '../views/VocabView.vue'
 import MeaningView from '../views/MeaningView.vue'
 import PracticeView from '../views/PracticeView.vue'
+import NewWord from '../views/NewWord.vue'
 const routes = [
   {
     path: '/',
@@ -62,6 +63,14 @@ const routes = [
     path: '/learn/vocab/practice',
     name: 'practice',
     component: PracticeView,
+    meta: {
+      needAuth: true
+    },
+  },
+  {
+    path: '/learn/vocab/add',
+    name: 'addWord',
+    component: NewWord,
     meta: {
       needAuth: true
     },

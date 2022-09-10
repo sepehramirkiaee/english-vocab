@@ -1,7 +1,11 @@
 <template>
   <div class="flex justify-between items-center">
+    <span v-if="backButton" @click="$router.back" class="cursor-pointer select-none material-symbols-outlined dark:text-white w-10"
+      >arrow_back</span
+    >
+
     <span
-      v-if="getAuthStatus"
+      v-else-if="getAuthStatus"
       class="material-symbols-outlined dark:text-white w-10"
       @click="toggleMenu"
       >menu</span
@@ -53,6 +57,7 @@ import { mapGetters, mapActions } from "vuex";
 import UserMenu from "./UserMenu.vue";
 
 export default {
+  props: ["backButton"],
   components: {
     UserMenu,
   },

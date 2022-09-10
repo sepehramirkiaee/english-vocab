@@ -1,6 +1,9 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
+  devServer: {
+    allowedHosts: ['englishvocab.com']
+  },
   pwa: {
     name: 'Vocab',
     themeColor: '#2563EB',

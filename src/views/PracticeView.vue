@@ -9,8 +9,10 @@
       h-screen
       p-4
       overflow-hidden
+      relative
     "
   >
+
     <header-toolbar>Review</header-toolbar>
     <div class="flex gap-5 items-center">
       <div
@@ -69,7 +71,14 @@
             btn-action
           "
         >
-          <span class="btn-icon material-symbols-outlined text-rose-800 dark:text-rose-200">
+          <span
+            class="
+              btn-icon
+              material-symbols-outlined
+              text-rose-800
+              dark:text-rose-200
+            "
+          >
             sentiment_dissatisfied
           </span>
         </div>
@@ -82,7 +91,14 @@
             active:dark:bg-cyan-900
           "
         >
-          <span class="btn-icon material-symbols-outlined text-cyan-700 dark:text-cyan-200">
+          <span
+            class="
+              btn-icon
+              material-symbols-outlined
+              text-cyan-700
+              dark:text-cyan-200
+            "
+          >
             sentiment_neutral
           </span>
         </div>
@@ -95,7 +111,14 @@
             active:dark:bg-lime-900
           "
         >
-          <span class="btn-icon material-symbols-outlined text-lime-700 dark:text-lime-200">
+          <span
+            class="
+              btn-icon
+              material-symbols-outlined
+              text-lime-700
+              dark:text-lime-200
+            "
+          >
             sentiment_satisfied
           </span>
         </div>

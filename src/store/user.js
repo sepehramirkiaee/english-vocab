@@ -1,6 +1,6 @@
 export default {
     state: {
-        isAuthenticated: false
+        isAuthenticated: true
     },
     mutations: {
         setAuthentication(state, payload) {

@@ -59,10 +59,19 @@ export default {
                     type: "error",
                   });
                 }
+              })
+              .catch((error) => {
+                this.$store.dispatch("setNotification", {
+                  message: error.response.data.message,
+                  type: "error",
+                });
               });
           })
           .catch((error) => {
-            console.log(error);
+            this.$store.dispatch("setNotification", {
+              message: error.response.data.message,
+              type: "error",
+            });
           });
       }
     },

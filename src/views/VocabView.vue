@@ -17,6 +17,22 @@
         Start Practicing
       </div>
     </router-link>
+    <router-link :to="{ name: 'addWord' }">
+      <div
+        class="
+          text-center
+          p-4
+          bg-cyan-500
+          text-white
+          font-bold
+          rounded-md
+          shadow-sm
+          dark:bg-cyan-600
+        "
+      >
+        Add New Word
+      </div>
+    </router-link>
     <div
       v-if="vocab"
       class="border-t pt-4 flex flex-col gap-4 dark:border-gray-500"
@@ -56,13 +72,15 @@ export default {
   },
 
   mounted() {
-    this.axios.get("http://localhost:8080/sampleData/vocab.json").then((response) => {
-      if (response.status == 200) {
-        if (response.data) {
-          this.setVocabList(response.data);
+    this.axios
+      .get("http://localhost:8080/sampleData/vocab.json")
+      .then((response) => {
+        if (response.status == 200) {
+          if (response.data) {
+            this.setVocabList(response.data);
+          }
         }
-      }
-    });
+      });
   },
 };
 </script>

@@ -5,19 +5,26 @@
       gap-4
       pl-6
       pr-2
-      py-8
+      pt-8
+      pb-2
       bg-white
       rounded-lg
       shadow
       dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600
       relative
       select-none
-      
       shrink-0
       w-full
     "
   >
-    <p class="text-2xl capitalize font-bold">{{ meaning.title }}</p>
+    <teleport to="#dialog">
+      <the-dialog v-if="showDialog" @accept="removeItem" @close="toggleRemoveDialog"
+        >Are you sure you want to remove this item from your list?</the-dialog
+      >
+    </teleport>
+    <div class="flex items-center justify-between">
+      <p class="text-2xl capitalize font-bold">{{ meaning.title }}</p>
+    </div>
     <transition name="meaning">
       <div
         class="opacity-0 gap-7 flex flex-col overflow-auto grow h-1 pr-4"
@@ -61,6 +68,36 @@
         ><span>Show Meaning</span>
       </div>
     </transition>
+
+    <div class="flex justify-end gap-4">
+      <span
+        @click="toggleRemoveDialog"
+        class="
+          material-symbols-outlined
+          text-gray-500
+          cursor-pointer
+          dark:text-white
+          p-2
+          border
+          dark:border-gray-500
+          rounded
+        "
+        >delete</span
+      >
+      <span
+        class="
+          material-symbols-outlined
+          text-gray-500
+          cursor-pointer
+          dark:text-white
+          p-2
+          border
+          dark:border-gray-500
+          rounded
+        "
+        >edit</span
+      >
+    </div>
   </div>
 </template>
 
@@ -71,6 +108,7 @@ export default {
   data() {
     return {
       visibleMeaning: false,
+      showDialog: false,
     };
   },
 
@@ -86,6 +124,13 @@ export default {
 
     mainContentScroll() {
       this.$refs.content.scrollTop = 0;
+    },
+
+    toggleRemoveDialog() {
+      this.showDialog = !this.showDialog;
+    },
+    removeItem() {
+      this.axios.delete("/api/deleteWord", { id: this.meaning.id });
     },
   },
 };

@@ -13,6 +13,7 @@ axios.defaults.headers['Access-Control-Allow-Origin'] = '*';
 
 import HeaderToolbar from './components/UI/HeaderToolbar.vue'
 import NotificationToast from './components/UI/NotificationToast.vue'
+import TheDialog from './components/UI/TheDialog.vue'
 import TheInput from './components/form/TheInput.vue'
 import PrimaryButton from './components/form/PrimaryButton.vue'
 import './registerServiceWorker'
@@ -20,6 +21,7 @@ import './registerServiceWorker'
 const app = createApp(App)
 app.component('HeaderToolbar', HeaderToolbar)
 app.component('NotificationToast', NotificationToast)
+app.component('TheDialog', TheDialog)
 app.component('TheInput', TheInput)
 app.component('PrimaryButton', PrimaryButton)
 
