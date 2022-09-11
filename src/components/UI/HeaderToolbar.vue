@@ -13,7 +13,7 @@
     <transition name="menu">
       <user-menu @toggleMenu="toggleMenu" v-if="showUserMenu"></user-menu>
     </transition>
-    <h3 class="font-bold text-xl my-4 dark:text-white">
+    <h3 class="font-medium capitalize text-xl my-4 dark:text-white">
       <slot></slot>
     </h3>
     <div

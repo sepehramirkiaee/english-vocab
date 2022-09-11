@@ -1,5 +1,5 @@
 <template>
-  <div
+  <primary-card
     class="
       flex flex-col
       gap-4
@@ -7,10 +7,6 @@
       pr-2
       pt-8
       pb-2
-      bg-white
-      rounded-lg
-      shadow
-      dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600
       relative
       select-none
       shrink-0
@@ -18,7 +14,10 @@
     "
   >
     <teleport to="#dialog">
-      <the-dialog v-if="showDialog" @accept="removeItem" @close="toggleRemoveDialog"
+      <the-dialog
+        v-if="showDialog"
+        @accept="removeItem"
+        @close="toggleRemoveDialog"
         >Are you sure you want to remove this item from your list?</the-dialog
       >
     </teleport>
@@ -84,25 +83,29 @@
         "
         >delete</span
       >
-      <span
-        class="
-          material-symbols-outlined
-          text-gray-500
-          cursor-pointer
-          dark:text-white
-          p-2
-          border
-          dark:border-gray-500
-          rounded
-        "
-        >edit</span
+      <router-link :to="{ name: 'editWord', params: { id: this.meaning.id } }">
+        <span
+          class="
+            material-symbols-outlined
+            text-gray-500
+            cursor-pointer
+            dark:text-white
+            p-2
+            border
+            dark:border-gray-500
+            rounded
+          "
+          >edit</span
+        ></router-link
       >
     </div>
-  </div>
+  </primary-card>
 </template>
 
 <script>
+import PrimaryCard from "../UI/PrimaryCard.vue";
 export default {
+  components: { PrimaryCard },
   props: ["meaning"],
 
   data() {
@@ -129,8 +132,16 @@ export default {
     toggleRemoveDialog() {
       this.showDialog = !this.showDialog;
     },
+
     removeItem() {
-      this.axios.delete("/api/deleteWord", { id: this.meaning.id });
+      this.axios
+        .delete("/api/deleteWord/" + this.meaning.id)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

@@ -1,6 +1,8 @@
 <template>
   <div :class="{ dark: darkMode }">
-    <div class="w-full bg-gray-50 dark:bg-gray-900 min-h-screen relative">
+    <div
+      class="w-full bg-gray-50 dark:bg-gray-900 min-h-screen relative font-sans"
+    >
       <div id="dialog"></div>
       <router-view />
     </div>
@@ -21,14 +23,16 @@ export default {
   },
 
   beforeCreate() {
-    this.axios
-      .get("/api/user")
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error.response.status);
-      });
+    this.axios.get("/sanctum/csrf-cookie").then(() => {
+      this.axios
+        .get("/api/user")
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error.response.status);
+        });
+    });
   },
 
   beforeMount() {

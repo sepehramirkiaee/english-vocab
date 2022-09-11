@@ -2,36 +2,10 @@
   <div class="flex flex-col gap-4 md:w-1/2 md:mx-auto lg:w-1/3 xl:w-1/4 p-4">
     <header-toolbar>Vocabulary</header-toolbar>
     <router-link :to="{ name: 'practice' }">
-      <div
-        class="
-          text-center
-          p-4
-          bg-lime-500
-          text-white
-          font-bold
-          rounded-md
-          shadow-sm
-          dark:bg-lime-600
-        "
-      >
-        Start Practicing
-      </div>
+      <navigation-button class="bg-orange-600" icon="flag">Start Practicing</navigation-button>
     </router-link>
     <router-link :to="{ name: 'addWord' }">
-      <div
-        class="
-          text-center
-          p-4
-          bg-cyan-500
-          text-white
-          font-bold
-          rounded-md
-          shadow-sm
-          dark:bg-cyan-600
-        "
-      >
-        Add New Word
-      </div>
+      <navigation-button class="bg-blue-600" icon="chat_add_on">Add New Word</navigation-button>
     </router-link>
     <div
       v-if="vocab"

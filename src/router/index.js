@@ -74,6 +74,14 @@ const routes = [
     meta: {
       needAuth: true
     },
+  },
+  {
+    path: '/learn/vocab/edit/:id',
+    name: 'editWord',
+    component: NewWord,
+    meta: {
+      needAuth: true
+    },
   }
 ]
 
