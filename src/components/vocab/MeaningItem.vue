@@ -60,6 +60,7 @@
           bg-white
           dark:bg-gray-700
           whitespace-nowrap
+          cursor-pointer
         "
         @click="show"
       >

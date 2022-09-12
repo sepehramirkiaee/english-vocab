@@ -6,7 +6,7 @@
 
     <span
       v-else-if="getAuthStatus"
-      class="material-symbols-outlined dark:text-white w-10"
+      class="material-symbols-outlined dark:text-white w-10 cursor-pointer"
       @click="toggleMenu"
       >menu</span
     >

@@ -140,11 +140,10 @@ export default {
       return this.passwordStrength.length >= 10;
     },
     passwordIsValid() {
-      // return (
-      //   this.passwordStrength.value == "Medium" ||
-      //   this.passwordStrength.value == "Strong"
-      // );
-      return true;
+      return (
+        this.passwordStrength.value == "Medium" ||
+        this.passwordStrength.value == "Strong"
+      );
     },
   },
 
@@ -153,29 +152,24 @@ export default {
       const formValidation = this.validateForm();
       if (formValidation) {
         this.axios
-          .get("/sanctum/csrf-cookie")
-          .then(() => {
-            this.axios
-              .post("/register", {
-                name: this.name,
-                email: this.email,
-                password: this.password,
-                password_confirmation: this.passwordConfirmation,
-              })
-              .then((response) => {
-                if (response.status == 201) {
-                  this.$store.dispatch("setAuthentication");
-                  this.$router.push({ name: "vocab" });
-                } else {
-                  this.$store.dispatch("setNotification", {
-                    message: "Something went wrong!",
-                    type: "error",
-                  });
-                }
-              });
+          .post("/register", {
+            name: this.name,
+            email: this.email,
+            password: this.password,
+            password_confirmation: this.passwordConfirmation,
           })
           // .get("../sampleData/login.json")
-
+          .then((response) => {
+            if (response.status == 201) {
+              this.$store.dispatch("setAuthentication");
+              this.$router.push({ name: "vocab" });
+            } else {
+              this.$store.dispatch("setNotification", {
+                message: "Something went wrong!",
+                type: "error",
+              });
+            }
+          })
           .catch((error) => {
             console.log(error);
           });

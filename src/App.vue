@@ -4,7 +4,7 @@
       class="w-full bg-gray-50 dark:bg-gray-900 min-h-screen relative font-sans"
     >
       <div id="dialog"></div>
-      <router-view />
+      <router-view v-if="!isLoading" />
     </div>
     <notification-toast></notification-toast>
   </div>
@@ -15,24 +15,11 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   computed: {
-    ...mapGetters(["darkMode"]),
+    ...mapGetters(["darkMode", "isLoading"]),
   },
 
   methods: {
     ...mapActions(["setDarkMode"]),
-  },
-
-  beforeCreate() {
-    this.axios.get("/sanctum/csrf-cookie").then(() => {
-      this.axios
-        .get("/api/user")
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error.response.status);
-        });
-    });
   },
 
   beforeMount() {

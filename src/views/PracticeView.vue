@@ -12,7 +12,6 @@
       relative
     "
   >
-
     <header-toolbar>Review</header-toolbar>
     <div class="flex gap-5 items-center">
       <div
@@ -170,13 +169,15 @@ export default {
 
   beforeMount() {
     if (!this.vocabList) {
-      this.axios.get("/sampleData/vocab.json").then((response) => {
-        if (response.status == 200) {
-          if (response.data) {
-            this.setVocabList(response.data);
+      this.axios
+        .get("http://localhost:8080/sampleData/vocab.json")
+        .then((response) => {
+          if (response.status == 200 || response.status == 304) {
+            if (response.data) {
+              this.$store.dispatch("setVocabList", response.data);
+            }
           }
-        }
-      });
+        });
     }
   },
 };
@@ -198,7 +199,7 @@ export default {
 }
 
 .btn-action {
-  @apply p-1 grow text-center shadow-sm rounded-md select-none transition-all duration-75 active:scale-95;
+  @apply p-1 grow text-center shadow-sm rounded-md select-none transition-all duration-75 active:scale-95 cursor-pointer;
 }
 
 .btn-icon {

@@ -5,11 +5,16 @@ import vocabModule from './vocab.js'
 
 export default createStore({
   state: {
-    darkMode: false
+    darkMode: false,
+    isLoading: false
   },
   getters: {
     darkMode(state) {
       return state.darkMode
+    },
+
+    isLoading(state) {
+      return state.isLoading
     }
   },
   mutations: {
@@ -20,6 +25,10 @@ export default createStore({
 
     setDarkMode(state, payload) {
       state.darkMode = payload
+    },
+
+    setIsLoading(state, payload) {
+      state.isLoading = payload
     }
   },
   actions: {
@@ -29,6 +38,10 @@ export default createStore({
 
     setDarkMode(context, payload) {
       context.commit('setDarkMode', (payload === 'true'))
+    },
+
+    setIsLoading(context, payload) {
+      context.commit('setIsLoading', payload)
     }
   },
   modules: {

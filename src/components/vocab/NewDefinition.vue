@@ -1,5 +1,6 @@
 <template>
   <primary-card class="p-4 flex flex-col gap-4">
+    
     <div>
       <the-select v-model="type" :options="typeOptions" @change="changeType"
         >Type</the-select
@@ -11,9 +12,7 @@
       >
     </div>
     <div>
-      <the-textarea
-        v-model="sample"
-        @input="changeSample"
+      <the-textarea v-model="sample" @input="changeSample"
         >Samples</the-textarea
       >
     </div>
@@ -47,12 +46,6 @@ export default {
         { title: "interjection" },
       ],
     };
-  },
-
-  watch: {
-    type(n) {
-      console.log(n);
-    },
   },
 
   methods: {

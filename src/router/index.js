@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '../store/index.js'
+import axios from 'axios'
 import LoginView from '../views/LoginView.vue'
 import LogoutView from '../views/LogoutView.vue'
 import SignupView from '../views/SignupView.vue'
@@ -90,8 +91,7 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, _, next) => {
-
+router.control = (to, _, next) => {
   const userAuth = store.getters.getAuthStatus;
   if (to.meta.needAuth && !userAuth) {
     next({ name: 'login' })
@@ -101,6 +101,25 @@ router.beforeEach((to, _, next) => {
   }
   else {
     next()
+  }
+}
+
+router.beforeEach((to, from, next) => {
+  if (!from.name) {
+    store.dispatch('setIsLoading', true)
+    axios.get("/sanctum/csrf-cookie").then(() => {
+      axios
+        .get("/api/user").then(res => {
+          if (res.status == 200) {
+            store.dispatch("setAuthentication");
+          }
+        }).finally(() => {
+          store.dispatch('setIsLoading', false)
+          router.control(to, from, next)
+        })
+    })
+  } else {
+    router.control(to, from, next)
   }
 
 })

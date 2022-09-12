@@ -10,7 +10,7 @@
         >
       </div>
       <ul class="flex flex-col p-8">
-        <li @click="logout">Logout</li>
+        <li @click="logout" class="cursor-pointer">Logout</li>
       </ul>
     </div>
   </div>

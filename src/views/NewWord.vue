@@ -5,29 +5,54 @@
       <primary-card class="p-4">
         <the-input v-model.trim="title">Enter The Word</the-input>
       </primary-card>
-      <new-definition
-        v-for="(definition, index) in meaning"
-        :key="definition.id"
-        :detail="definition"
-        @changeType="changeType"
-        @changeMeaning="changeMeaning"
-        @changeSample="changeSample"
-      >
-        <primary-button
-          v-if="index === meaning.length - 1"
-          @click="addDefinition"
-          class="
-            self-end
-            bg-emerald-600
-            dark:bg-emerald-700
-            hover:bg-emerald-500
-            flex items-center justify-center gap-2
-          "
-          type="button"
-          ><span class="material-symbols-outlined text-sm">add</span>Add Another
-          Definition</primary-button
+      <transition-group name="list">
+        <new-definition
+          v-for="(definition, index) in meaning"
+          :key="definition.id"
+          :detail="definition"
+          @changeType="changeType"
+          @changeMeaning="changeMeaning"
+          @changeSample="changeSample"
         >
-      </new-definition>
+          <div class="flex gap-2 justify-end">
+            <primary-button
+              v-if="meaning.length > 1"
+              @click="removeDefinition(definition.id)"
+              class="
+                self-end
+                !bg-white
+                flex
+                items-center
+                justify-center
+                gap-2
+                !text-gray-500
+                dark:!bg-gray-800 dark:!text-gray-400
+              "
+              type="button"
+              ><span class="material-symbols-outlined">delete</span
+              >Remove</primary-button
+            >
+
+            <primary-button
+              v-if="index === meaning.length - 1"
+              @click="addDefinition"
+              class="
+                self-end
+                bg-emerald-600
+                dark:bg-emerald-700
+                hover:bg-emerald-500
+                flex
+                items-center
+                justify-center
+                gap-2
+              "
+              type="button"
+              ><span class="material-symbols-outlined text-sm">add</span>Add
+              Definition</primary-button
+            >
+          </div>
+        </new-definition>
+      </transition-group>
       <primary-button>Submit</primary-button>
     </form>
   </div>
@@ -52,6 +77,9 @@ export default {
           sample: "",
         },
       ],
+      // api_id: "d156b09c",
+      // api_key: "8ab08e6ccafaa7580af1731f57f02b5f",
+      // language: "en-gb",
     };
   },
 
@@ -63,6 +91,7 @@ export default {
         this.addWord();
       }
     },
+
     addWord() {
       this.axios
         .post("/api/addWord", { title: this.title, meaning: this.meaning })
@@ -97,6 +126,10 @@ export default {
       });
     },
 
+    removeDefinition(id) {
+      this.meaning = this.meaning.filter((item) => item.id != id);
+    },
+
     changeType(value, id) {
       this.meaning.forEach((element, index) => {
         if (element.id === id) {
@@ -120,6 +153,19 @@ export default {
         }
       });
     },
+
+    // getMeaningApi() {
+    //   this.axios
+    //     .get(
+    //       "https://od-api.oxforddictionaries.com/api/v2/" +
+    //         this.language +
+    //         "/" +
+    //         this.title.toLowerCase()
+    //     )
+    //     .then((response) => {
+    //       console.log(response);
+    //     });
+    // },
   },
 
   beforeMount() {
@@ -141,3 +187,19 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.list-leave-to,
+.list-enter-from {
+  @apply opacity-0;
+}
+
+.list-enter-to {
+  @apply opacity-100;
+}
+
+.list-leave-active,
+.list-enter-active {
+  @apply transition-all;
+}
+</style>
