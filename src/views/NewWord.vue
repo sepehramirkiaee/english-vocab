@@ -94,7 +94,7 @@ export default {
 
     addWord() {
       this.axios
-        .post("/api/addWord", { title: this.title, meaning: this.meaning })
+        .post("/api/vocab", { title: this.title, meaning: this.meaning })
         .then((response) => {
           console.log(response);
         })
@@ -105,7 +105,7 @@ export default {
 
     editWord() {
       this.axios
-        .put("/api/editWord/" + this.id, {
+        .put("/api/vocab/" + this.id, {
           title: this.title,
           meaning: this.meaning,
         })

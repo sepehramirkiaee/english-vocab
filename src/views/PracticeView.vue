@@ -170,7 +170,7 @@ export default {
   beforeMount() {
     if (!this.vocabList) {
       this.axios
-        .get("http://localhost:8080/sampleData/vocab.json")
+        .get("/api/vocab")
         .then((response) => {
           if (response.status == 200 || response.status == 304) {
             if (response.data) {

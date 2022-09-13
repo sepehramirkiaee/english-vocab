@@ -47,7 +47,7 @@ export default {
 
   mounted() {
     this.axios
-      .get("http://localhost:8080/sampleData/vocab.json")
+      .get("/api/vocab")
       .then((response) => {
         if (response.status == 200) {
           if (response.data) {
