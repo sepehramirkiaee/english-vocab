@@ -12,7 +12,7 @@
       relative
     "
   >
-    <header-toolbar>Review</header-toolbar>
+    <header-toolbar :backButton="true">Review</header-toolbar>
     <div class="flex gap-5 items-center">
       <div
         class="
@@ -52,7 +52,7 @@
     </div>
     <div class="flex flex-col grow">
       <div class="flex grow gap-2">
-        <transition name="slide">
+        <transition name="slide" v-if="vocabList.length > 0">
           <meaning-item
             :meaning="item"
             ref="item"
@@ -128,6 +128,7 @@
 
 <script>
 import MeaningItem from "../components/vocab/MeaningItem.vue";
+import { mapActions } from "vuex";
 
 export default {
   components: { MeaningItem },
@@ -135,6 +136,9 @@ export default {
     return {
       index: 0,
       showMainItem: true,
+      links: {
+        next: null,
+      },
     };
   },
 
@@ -153,31 +157,48 @@ export default {
   },
 
   methods: {
+    ...mapActions(["setVocabList", "addToVocabList"]),
+
     next() {
       if (this.index + 1 < this.vocabList.length) {
         this.showMainItem = false;
         setTimeout(() => {
           this.index++;
           this.showMainItem = true;
+          if (this.index + 1 == this.vocabList.length) {
+            this.getMoreVocab();
+          }
         }, 300);
         this.$refs.item.reset();
       } else {
         this.$router.push({ name: "vocab" });
       }
     },
+
+    getMoreVocab() {
+      if (this.links.next) {
+        this.axios.get(this.links.next).then((response) => {
+          if (response.status == 200) {
+            if (response.data.data) {
+              this.addToVocabList(response.data.data);
+            }
+            this.links.next = response.data.links.next;
+          }
+        });
+      }
+    },
   },
 
   beforeMount() {
-    if (!this.vocabList) {
-      this.axios
-        .get("/api/vocab")
-        .then((response) => {
-          if (response.status == 200 || response.status == 304) {
-            if (response.data) {
-              this.$store.dispatch("setVocabList", response.data);
-            }
+    if (this.vocabList.length == 0) {
+      this.axios.get("/api/vocab").then((response) => {
+        if (response.status == 200) {
+          if (response.data.data) {
+            this.setVocabList(response.data.data);
           }
-        });
+          this.links.next = response.data.links.next;
+        }
+      });
     }
   },
 };

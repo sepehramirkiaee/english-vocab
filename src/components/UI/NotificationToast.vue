@@ -1,5 +1,5 @@
 <template>
-  <div v-if="notifications" class="absolute bottom-3 w-full left-0 p-4 md:w-auto">
+  <div v-if="notifications" class="fixed bottom-3 w-full left-0 p-4 md:w-auto">
     <transition-group name="notification" tag="div" class="flex flex-col gap-2">
       <div
         class="py-3 px-6 w-full rounded border bg-black text-white"

@@ -96,7 +96,13 @@ export default {
       this.axios
         .post("/api/vocab", { title: this.title, meaning: this.meaning })
         .then((response) => {
-          console.log(response);
+          if (response.status == 201) {
+            this.$store.dispatch("setNotification", {
+              message: "New word has been added",
+              type: "success",
+            });
+            this.$router.back()
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -110,7 +116,12 @@ export default {
           meaning: this.meaning,
         })
         .then((response) => {
-          console.log(response);
+          if (response.status == 201) {
+            this.$store.dispatch("setNotification", {
+              message: "New word has been added",
+              type: "success",
+            });
+          }
         })
         .catch((error) => {
           console.log(error);
