@@ -5,7 +5,7 @@
   >
     <div class="w-3/4 bg-black bg-opacity-80 h-screen text-white" @click.stop>
       <div class="flex justify-end">
-        <span class="material-symbols-outlined p-8" @click="$emit('toggleMenu')"
+        <span class="material-symbols-outlined p-8 cursor-pointer" @click="$emit('toggleMenu')"
           >close</span
         >
       </div>

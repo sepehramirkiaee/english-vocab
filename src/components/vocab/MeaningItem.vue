@@ -11,6 +11,7 @@
       select-none
       shrink-0
       w-full
+      grow
     "
   >
     <teleport to="#dialog">
@@ -31,7 +32,7 @@
         ref="content"
       >
         <div
-          v-for="meaning_item in meaning.meaning"
+          v-for="meaning_item in meaning.meanings"
           :key="meaning_item.id"
           class="flex flex-col gap-1"
         >
@@ -145,6 +146,7 @@ export default {
         });
     },
   },
+
 };
 </script>
 

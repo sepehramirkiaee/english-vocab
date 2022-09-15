@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col gap-4 md:w-1/2 md:mx-auto lg:w-1/3 xl:w-1/4 p-4">
+  <div class="flex flex-col gap-4 md:w-1/2 md:mx-auto lg:w-1/3 xl:w-1/4 p-4 h-screen">
     <header-toolbar>Vocabulary</header-toolbar>
-    <router-link :to="{ name: 'practice' }">
+    <router-link :to="{ name: 'practice' }" v-if="vocab.length">
       <navigation-button class="bg-orange-600" icon="flag"
         >Start Practicing</navigation-button
       >
@@ -14,9 +14,9 @@
     <div
       v-if="vocab.length"
       ref="vocabContainer"
-      class="border-t pt-4 flex flex-col gap-4 dark:border-gray-500"
+      class="border-t pt-4 flex flex-col gap-4 dark:border-gray-500 grow"
     >
-      <list-item v-for="item in vocab" :key="item.id" :item="item"></list-item>
+      <list-item v-for="item in vocab" :key="item.id" :item="item" class="last:mb-8"></list-item>
       <p v-if="!this.links.next" class="text-center text-sm dark:text-gray-400">That's the end of your list</p>
     </div>
     <div
@@ -27,6 +27,7 @@
         mt-8
         justify-center
         items-center
+        grow
         dark:text-gray-400
       "
     >
@@ -49,6 +50,7 @@
         mt-8
         justify-center
         items-center
+        grow
         dark:text-gray-400
       "
     >

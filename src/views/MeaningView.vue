@@ -1,38 +1,56 @@
 <template>
-  <div class="flex flex-col gap-4 md:w-1/2 md:mx-auto lg:w-1/3 xl:w-1/4 p-4">
-    <header-toolbar>Vocabulary</header-toolbar>
-    <div
-      v-if="meaning"
-      class="flex flex-col gap-4 px-6 py-8 bg-white rounded-lg shadow-md"
-    >
-      <p class="text-2xl capitalize font-bold">{{ meaning.title }}</p>
+  <div
+    class="
+      flex flex-col
+      gap-4
+      md:w-1/2 md:mx-auto
+      lg:w-1/3
+      xl:w-1/4
+      h-screen
+      p-4
+      overflow-hidden
+      relative
+    "
+  >
+    <header-toolbar :backButton="true">Vocabulary</header-toolbar>
+    <div class="flex flex-col grow">
+      <meaning-item v-if="meaning" :meaning="meaning"></meaning-item>
       <div
-        v-for="meaning_item in meaning.meaning"
-        :key="meaning_item.id"
-        class="flex flex-col gap1"
+        v-else
+        class="
+          flex flex-col
+          gap-2
+          mt-8
+          justify-center
+          items-center
+          dark:text-gray-400
+          grow
+        "
       >
-        <p class="text-sm text-gray-400">{{ meaning_item.type }}</p>
-        <p class="font-medium mb-2">{{ meaning_item.meaning }}</p>
-        <p class="text-sm border-l-2 pl-4">{{ meaning_item.sample }}</p>
+        <span
+          class="
+            material-symbols-outlined
+            text-9xl text-gray-300
+            dark:text-gray-600
+          "
+        >
+          hourglass_top
+        </span>
+        <p class="text-xl">Please Wait ...</p>
       </div>
     </div>
-    <div v-else class="flex flex-col gap-8 justify-center items-center">
-      <img
-        class="w-2/3 opacity-90"
-        src="../assets/illustration/not_found_word.svg"
-      />
-      <router-link
-        :to="{ name: 'vocab' }"
-        class="bg-blue-500 text-white px-6 py-3 rounded"
-        >Back to My List</router-link
-      >
-    </div>
+    <memory-score @next="score"></memory-score>
   </div>
 </template>
 
 <script>
+import MeaningItem from "../components/vocab/MeaningItem.vue";
+import MemoryScore from "../components/vocab/MemoryScore.vue";
+
 export default {
   props: ["id"],
+
+  components: { MeaningItem, MemoryScore },
 
   data() {
     return {
@@ -40,15 +58,19 @@ export default {
     };
   },
 
-  beforeMount() {
+  methods: {
+    score() {
+      this.$router.push({ name: "vocab" });
+    },
+  },
+
+  mounted() {
     this.meaning = this.$store.getters.getVocabById(this.id);
-    console.log(this.meaning)
-    if (!this.meaning) {
-      this.axios.get("/sampleData/meaning.json").then((response) => {
-        console.log(response)
+    if (this.meaning == null) {
+      this.axios.get("/api/vocab/" + this.id).then((response) => {
         if (response.status == 200) {
-          if (response.data) {
-            this.meaning = response.data;
+          if (response.data.data) {
+            this.meaning = response.data.data;
           }
         }
       });
