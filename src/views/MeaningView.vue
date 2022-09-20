@@ -14,7 +14,7 @@
   >
     <header-toolbar :backButton="true">Vocabulary</header-toolbar>
     <div class="flex flex-col grow">
-      <meaning-item v-if="meaning" :meaning="meaning"></meaning-item>
+      <meaning-item v-if="meaning" :meaning="meaning" mode="single"></meaning-item>
       <div
         v-else
         class="

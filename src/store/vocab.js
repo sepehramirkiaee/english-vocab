@@ -1,6 +1,7 @@
 export default {
     state: {
-        vocab: []
+        vocab: [],
+        practiceIndex: 0
     },
     mutations: {
         setVocabList(state, payload) {
@@ -11,6 +12,14 @@ export default {
             payload.forEach((value) => {
                 state.vocab.push(value)
             })
+        },
+
+        removeFromVocabList(state, payload) {
+            state.vocab = state.vocab.filter((item) => item.id !== payload)
+        },
+
+        changePracticeIndex(state, payload) {
+            state.practiceIndex = payload
         }
     },
     actions: {
@@ -20,6 +29,14 @@ export default {
 
         addToVocabList(context, payload) {
             context.commit('addToVocabList', payload)
+        },
+
+        removeFromVocabList(context, payload) {
+            context.commit('removeFromVocabList', payload)
+        },
+
+        changePracticeIndex(context, payload) {
+            context.commit('changePracticeIndex', payload)
         }
     },
     getters: {
@@ -34,6 +51,10 @@ export default {
             else {
                 return false
             }
+        },
+
+        getPracticeIndex(state){
+            return state.practiceIndex
         }
     }
 }

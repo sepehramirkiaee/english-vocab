@@ -67,7 +67,7 @@
 
 <script>
 import MeaningItem from "../components/vocab/MeaningItem.vue";
-import MemoryScore from "../components/vocab/MemoryScore.vue"
+import MemoryScore from "../components/vocab/MemoryScore.vue";
 import { mapActions } from "vuex";
 
 export default {
@@ -79,7 +79,21 @@ export default {
       links: {
         next: null,
       },
+      isLoading: false,
     };
+  },
+
+  watch: {
+    vocabList(newValue) {
+      if (newValue.length == 0 || this.index == newValue.length) {
+        this.$router.push({ name: "vocab" });
+      }
+      this.getMoreVocab();
+    },
+
+    index() {
+      this.getMoreVocab();
+    },
   },
 
   computed: {
@@ -88,7 +102,11 @@ export default {
     },
 
     item() {
-      return this.vocabList[this.index];
+      if (this.vocabList[this.index]) {
+        return this.vocabList[this.index];
+      } else {
+        return { id: 0, title: "", meanings: {} };
+      }
     },
 
     percent() {
@@ -100,46 +118,51 @@ export default {
     ...mapActions(["setVocabList", "addToVocabList"]),
 
     next() {
-      if (this.index + 1 < this.vocabList.length) {
-        this.showMainItem = false;
-        setTimeout(() => {
-          this.index++;
-          this.showMainItem = true;
-          if (this.index + 1 == this.vocabList.length) {
-            this.getMoreVocab();
-          }
-        }, 300);
-        this.$refs.item.reset();
-      } else {
-        this.$router.push({ name: "vocab" });
+      if (!this.isLoading) {
+        if (this.index + 1 < this.vocabList.length) {
+          this.isLoading = true;
+          this.showMainItem = false;
+          setTimeout(() => {
+            this.index++;
+            this.showMainItem = true;
+            this.isLoading = false;
+          }, 300);
+          this.$refs.item.reset();
+        } else {
+          this.$router.push({ name: "vocab" });
+        }
       }
     },
 
     getMoreVocab() {
-      if (this.links.next) {
-        this.axios.get(this.links.next).then((response) => {
-          if (response.status == 200) {
-            if (response.data.data) {
-              this.addToVocabList(response.data.data);
+      if (this.links.next != null && (this.index + 5) >= this.vocabList.length && !this.isLoading) {
+        this.isLoading = true;
+        this.axios
+          .get(this.links.next)
+          .then((response) => {
+            if (response.status == 200) {
+              if (response.data.data) {
+                this.addToVocabList(response.data.data);
+              }
+              this.links.next = response.data.links.next;
             }
-            this.links.next = response.data.links.next;
-          }
-        });
+          })
+          .finally(() => {
+            this.isLoading = false;
+          });
       }
     },
   },
 
   beforeMount() {
-    if (this.vocabList.length == 0) {
-      this.axios.get("/api/vocab").then((response) => {
-        if (response.status == 200) {
-          if (response.data.data) {
-            this.setVocabList(response.data.data);
-          }
-          this.links.next = response.data.links.next;
+    this.axios.get("/api/vocab").then((response) => {
+      if (response.status == 200) {
+        if (response.data.data) {
+          this.setVocabList(response.data.data);
         }
-      });
-    }
+        this.links.next = response.data.links.next;
+      }
+    });
   },
 };
 </script>

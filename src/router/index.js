@@ -8,6 +8,7 @@ import VocabView from '../views/VocabView.vue'
 import MeaningView from '../views/MeaningView.vue'
 import PracticeView from '../views/PracticeView.vue'
 import NewWord from '../views/NewWord.vue'
+import NotFound from '../error-pages/NotFound.vue'
 const routes = [
   {
     path: '/',
@@ -83,6 +84,11 @@ const routes = [
     meta: {
       needAuth: true
     },
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'notFound',
+    component: NotFound
   }
 ]
 
@@ -105,7 +111,7 @@ router.control = (to, _, next) => {
 }
 
 router.beforeEach((to, from, next) => {
-  if (!from.name) {
+  if (!from.name && to.name !== 'notFound') {
     store.dispatch('setIsLoading', true)
     axios.get("/sanctum/csrf-cookie").then(() => {
       axios

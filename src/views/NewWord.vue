@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-4 md:w-1/2 md:mx-auto lg:w-1/3 xl:w-1/4 p-4">
-    <header-toolbar :backButton="true">Add Word</header-toolbar>
+    <header-toolbar :backButton="true">{{ pageTitle }}</header-toolbar>
     <form @submit.prevent="handleFunction" class="flex flex-col gap-3">
       <primary-card class="p-4">
         <the-input v-model.trim="title">Enter The Word</the-input>
@@ -83,6 +83,12 @@ export default {
     };
   },
 
+  computed: {
+    pageTitle() {
+      return this.$route.params.id ? "Edit Word" : "Add Word";
+    },
+  },
+
   methods: {
     handleFunction() {
       if (this.$route.params.id) {
@@ -101,7 +107,7 @@ export default {
               message: "New word has been added",
               type: "success",
             });
-            this.$router.back()
+            this.$router.back();
           }
         })
         .catch((error) => {
@@ -116,11 +122,12 @@ export default {
           meaning: this.meaning,
         })
         .then((response) => {
-          if (response.status == 201) {
+          if (response.status == 200) {
             this.$store.dispatch("setNotification", {
-              message: "New word has been added",
+              message: "This word has been edited",
               type: "success",
             });
+            this.$router.back();
           }
         })
         .catch((error) => {
@@ -182,14 +189,15 @@ export default {
   beforeMount() {
     if (this.$route.params.id) {
       this.axios
-        .get("/api/getWord/" + this.$route.params.id)
+        .get("/api/vocab/" + this.$route.params.id)
         .then((response) => {
           if (response.status == 200) {
-            this.id = response.data.id;
-            this.title = response.data.title;
-            this.meaning = response.data.meaning;
+            this.id = response.data.data.id;
+            this.title = response.data.data.title;
+            if (response.data.data.meanings.length > 0) {
+              this.meaning = response.data.data.meanings;
+            }
           }
-          console.log(response);
         })
         .catch((error) => {
           console.log(error);

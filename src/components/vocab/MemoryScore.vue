@@ -50,6 +50,7 @@
 
 <script>
 export default {
+  props: ["isLoading"],
   emits: ["next"],
   methods: {
     next() {

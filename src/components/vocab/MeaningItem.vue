@@ -108,7 +108,7 @@
 import PrimaryCard from "../UI/PrimaryCard.vue";
 export default {
   components: { PrimaryCard },
-  props: ["meaning"],
+  props: ["meaning", "mode"],
 
   data() {
     return {
@@ -137,9 +137,14 @@ export default {
 
     removeItem() {
       this.axios
-        .delete("/api/deleteWord/" + this.meaning.id)
+        .delete("/api/vocab/" + this.meaning.id)
         .then((response) => {
-          console.log(response);
+          if (response.status == 204) {
+            this.$store.dispatch("removeFromVocabList", this.meaning.id);
+            if (this.mode && this.mode == "single") {
+              this.$router.back();
+            }
+          }
         })
         .catch((error) => {
           console.log(error);

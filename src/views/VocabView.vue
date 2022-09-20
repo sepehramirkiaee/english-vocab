@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-4 md:w-1/2 md:mx-auto lg:w-1/3 xl:w-1/4 p-4 h-screen">
+  <div class="flex flex-col gap-4 md:w-1/2 md:mx-auto lg:w-1/3 xl:w-1/4 p-4 min-h-screen">
     <header-toolbar>Vocabulary</header-toolbar>
     <router-link :to="{ name: 'practice' }" v-if="vocab.length">
       <navigation-button class="bg-orange-600" icon="flag"
@@ -12,7 +12,7 @@
       >
     </router-link>
     <div
-      v-if="vocab.length"
+      v-if="vocab.length && !isLoading"
       ref="vocabContainer"
       class="border-t pt-4 flex flex-col gap-4 dark:border-gray-500 grow"
     >
