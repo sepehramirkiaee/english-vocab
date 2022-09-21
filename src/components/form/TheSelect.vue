@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <field-wrapper>
     <label class="dark:text-gray-400 text-sm"><slot></slot></label>
     <span
       class="
@@ -43,7 +43,7 @@
         {{ option.title }}
       </option>
     </select>
-  </div>
+  </field-wrapper>
 </template>
 
 <script>

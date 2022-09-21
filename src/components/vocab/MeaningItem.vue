@@ -25,7 +25,7 @@
     <div class="flex items-center justify-between">
       <p class="text-2xl capitalize font-bold">{{ meaning.title }}</p>
     </div>
-    <transition name="meaning">
+    <transition name="meaning" v-if="meaning.meanings.length > 0">
       <div
         class="opacity-0 gap-7 flex flex-col overflow-auto grow h-1 pr-4"
         :class="{ 'opacity-100': visibleMeaning }"
@@ -43,7 +43,7 @@
       </div>
     </transition>
 
-    <transition name="show">
+    <transition name="show" v-if="meaning.meanings.length > 0">
       <div
         v-if="!visibleMeaning"
         class="
@@ -69,6 +69,24 @@
         ><span>Show Meaning</span>
       </div>
     </transition>
+    <div
+      v-else
+      class="flex items-center justify-center grow flex-col gap-2 p-2"
+    >
+      <span
+        class="
+          material-symbols-outlined
+          text-9xl text-gray-300
+          dark:text-gray-600
+        "
+      >
+        exclamation
+      </span>
+      <p class="text-lg">There is no more information</p>
+      <p class="text-sm text-gray-500 text-center">
+        You can add definition and example by editing this item
+      </p>
+    </div>
 
     <div class="flex justify-end gap-4">
       <span
@@ -128,7 +146,9 @@ export default {
     },
 
     mainContentScroll() {
-      this.$refs.content.scrollTop = 0;
+      if (this.$refs.content) {
+        this.$refs.content.scrollTop = 0;
+      }
     },
 
     toggleRemoveDialog() {
@@ -151,7 +171,6 @@ export default {
         });
     },
   },
-
 };
 </script>
 

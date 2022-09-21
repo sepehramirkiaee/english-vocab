@@ -1,84 +1,98 @@
 <template>
-  <div class="flex flex-col gap-4 md:w-1/2 md:mx-auto lg:w-1/3 xl:w-1/4 p-4">
-    <header-toolbar>Sign Up</header-toolbar>
-    <form @submit.prevent="submit" class="w-full flex flex-col gap-4">
-      <the-input v-model.trim="name">Name</the-input>
-      <the-input
-        type="email"
-        placeholder="alexander@domain.com"
-        v-model.trim="email"
-        >Email</the-input
-      >
-      <the-input @input="checkStrength" type="password" v-model.trim="password"
-        ><span class="flex justify-between items-center">
-          Password<span
-            v-if="passwordStrength.value"
-            :class="{
-              'bg-green-700': passwordIsValid,
-              'bg-red-500': !passwordIsValid,
-            }"
-            class="text-white px-1 text-xs rounded"
-            >{{ passwordStrength.value }}</span
-          ></span
-        ></the-input
-      >
-      <the-input type="password" v-model.trim="passwordConfirmation"
-        >Confirm Password</the-input
-      >
-      <div>
-        <div class="flex items-center">
-          <span
-            :class="{ 'text-green-600 dark:text-green-400': containsLowercase }"
-            class="material-symbols-outlined text-sm mr-2"
-            >check_circle</span
-          ><span class="text-xs dark:text-gray-400">Contains Lowercase</span>
+  <div class="md:w-1/2 md:mx-auto p-4 flex min-h-screen lg:w-full lg:p-0">
+    <div class="flex flex-col gap-4 w-full lg:w-1/3 lg:p-12 lg:justify-center">
+      <header-toolbar>Sign Up</header-toolbar>
+      <form @submit.prevent="submit" class="w-full flex flex-col gap-4">
+        <the-input v-model.trim="name">Name</the-input>
+        <the-input
+          type="email"
+          placeholder="alexander@domain.com"
+          v-model.trim="email"
+          >Email</the-input
+        >
+        <the-input
+          @input="checkStrength"
+          type="password"
+          v-model.trim="password"
+          ><span class="flex justify-between items-center">
+            Password<span
+              v-if="passwordStrength.value"
+              :class="{
+                'bg-green-700': passwordIsValid,
+                'bg-red-500': !passwordIsValid,
+              }"
+              class="text-white px-1 text-xs rounded"
+              >{{ passwordStrength.value }}</span
+            ></span
+          ></the-input
+        >
+        <the-input type="password" v-model.trim="passwordConfirmation"
+          >Confirm Password</the-input
+        >
+        <div>
+          <div class="flex items-center">
+            <span
+              :class="{
+                'text-green-600 dark:text-green-400': containsLowercase,
+              }"
+              class="material-symbols-outlined text-sm mr-2"
+              >check_circle</span
+            ><span class="text-xs dark:text-gray-400">Contains Lowercase</span>
+          </div>
+          <div class="flex items-center">
+            <span
+              :class="{
+                'text-green-600 dark:text-green-400': containsUppercase,
+              }"
+              class="material-symbols-outlined text-sm mr-2"
+              >check_circle</span
+            ><span class="text-xs dark:text-gray-400">Contains Uppercase</span>
+          </div>
+          <div class="flex items-center">
+            <span
+              :class="{ 'text-green-600 dark:text-green-400': containsNumber }"
+              class="material-symbols-outlined text-sm mr-2"
+              >check_circle</span
+            ><span class="text-xs dark:text-gray-400">Contains Number</span>
+          </div>
+          <div class="flex items-center">
+            <span
+              :class="{ 'text-green-600 dark:text-green-400': containsSymbol }"
+              class="material-symbols-outlined text-sm mr-2"
+              >check_circle</span
+            ><span class="text-xs dark:text-gray-400"
+              >Contains Special Character</span
+            >
+          </div>
+          <div class="flex items-center">
+            <span
+              :class="{ 'text-green-600 dark:text-green-400': containsTen }"
+              class="material-symbols-outlined text-sm mr-2"
+              >check_circle</span
+            ><span class="text-xs dark:text-gray-400"
+              >Contains at least 10 Character</span
+            >
+          </div>
         </div>
-        <div class="flex items-center">
-          <span
-            :class="{ 'text-green-600 dark:text-green-400': containsUppercase }"
-            class="material-symbols-outlined text-sm mr-2"
-            >check_circle</span
-          ><span class="text-xs dark:text-gray-400">Contains Uppercase</span>
-        </div>
-        <div class="flex items-center">
-          <span
-            :class="{ 'text-green-600 dark:text-green-400': containsNumber }"
-            class="material-symbols-outlined text-sm mr-2"
-            >check_circle</span
-          ><span class="text-xs dark:text-gray-400">Contains Number</span>
-        </div>
-        <div class="flex items-center">
-          <span
-            :class="{ 'text-green-600 dark:text-green-400': containsSymbol }"
-            class="material-symbols-outlined text-sm mr-2"
-            >check_circle</span
-          ><span class="text-xs dark:text-gray-400"
-            >Contains Special Character</span
-          >
-        </div>
-        <div class="flex items-center">
-          <span
-            :class="{ 'text-green-600 dark:text-green-400': containsTen }"
-            class="material-symbols-outlined text-sm mr-2"
-            >check_circle</span
-          ><span class="text-xs dark:text-gray-400"
-            >Contains at least 10 Character</span
-          >
-        </div>
-      </div>
 
-      <primary-button>Sign Up</primary-button>
-    </form>
-    <div
-      class="
-        decoration-blue-500
-        underline-offset-2
-        hover:decoration-2
-        dark:text-gray-200
-      "
-    >
-      <span class="text-sm">If you alreasy have account, you can </span>
-      <router-link :to="{ name: 'login' }" class="underline">Login</router-link>
+        <primary-button>Sign Up</primary-button>
+      </form>
+      <div
+        class="
+          decoration-blue-500
+          underline-offset-2
+          hover:decoration-2
+          dark:text-gray-200
+        "
+      >
+        <span class="text-sm">If you alreasy have account, you can </span>
+        <router-link :to="{ name: 'login' }" class="underline"
+          >Login</router-link
+        >
+      </div>
+    </div>
+    <div class="hidden w-2/3 lg:flex bg-blue-700 grow items-center p-12">
+      <div class="text-white text-6xl font-bold capitalize">Become Consistant In Learning Process</div>
     </div>
   </div>
 </template>

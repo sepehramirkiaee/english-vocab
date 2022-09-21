@@ -1,61 +1,91 @@
 <template>
-  <div class="flex flex-col gap-4 md:w-1/2 md:mx-auto lg:w-1/3 xl:w-1/4 p-4">
-    <header-toolbar :backButton="true">{{ pageTitle }}</header-toolbar>
-    <form @submit.prevent="handleFunction" class="flex flex-col gap-3">
-      <primary-card class="p-4">
-        <the-input v-model.trim="title">Enter The Word</the-input>
-      </primary-card>
-      <transition-group name="list">
-        <new-definition
-          v-for="(definition, index) in meaning"
-          :key="definition.id"
-          :detail="definition"
-          @changeType="changeType"
-          @changeMeaning="changeMeaning"
-          @changeSample="changeSample"
-        >
-          <div class="flex gap-2 justify-end">
-            <primary-button
-              v-if="meaning.length > 1"
-              @click="removeDefinition(definition.id)"
-              class="
-                self-end
-                !bg-white
-                flex
-                items-center
-                justify-center
-                gap-2
-                !text-gray-500
-                dark:!bg-gray-800 dark:!text-gray-400
-              "
-              type="button"
-              ><span class="material-symbols-outlined">delete</span
-              >Remove</primary-button
-            >
+  <header-toolbar :backButton="true">{{ pageTitle }}</header-toolbar>
+  <content-wrapper>
+    <user-side-menu></user-side-menu>
+    <div class="self-stretch w-full flex flex-col">
+      <form
+        v-if="!isLoading"
+        @submit.prevent="handleFunction"
+        class="flex flex-col gap-3 w-full"
+      >
+        <primary-card class="p-4">
+          <the-input v-model.trim="title">Enter The Word</the-input>
+        </primary-card>
+        <transition-group name="list">
+          <new-definition
+            v-for="(definition, index) in meaning"
+            :key="definition.id"
+            :detail="definition"
+            @changeType="changeType"
+            @changeMeaning="changeMeaning"
+            @changeSample="changeSample"
+          >
+            <div class="flex gap-2 justify-end">
+              <primary-button
+                v-if="meaning.length > 1"
+                @click="removeDefinition(definition.id)"
+                class="
+                  self-end
+                  !bg-white
+                  flex
+                  items-center
+                  justify-center
+                  gap-2
+                  !text-gray-500
+                  dark:!bg-gray-800 dark:!text-gray-400
+                "
+                type="button"
+                ><span class="material-symbols-outlined">delete</span
+                >Remove</primary-button
+              >
 
-            <primary-button
-              v-if="index === meaning.length - 1"
-              @click="addDefinition"
-              class="
-                self-end
-                bg-emerald-600
-                dark:bg-emerald-700
-                hover:bg-emerald-500
-                flex
-                items-center
-                justify-center
-                gap-2
-              "
-              type="button"
-              ><span class="material-symbols-outlined text-sm">add</span>Add
-              Definition</primary-button
-            >
-          </div>
-        </new-definition>
-      </transition-group>
-      <primary-button>Submit</primary-button>
-    </form>
-  </div>
+              <primary-button
+                v-if="index === meaning.length - 1"
+                @click="addDefinition"
+                class="
+                  self-end
+                  bg-emerald-600
+                  dark:bg-emerald-700
+                  hover:bg-emerald-500
+                  flex
+                  items-center
+                  justify-center
+                  gap-2
+                "
+                type="button"
+                ><span class="material-symbols-outlined text-sm">add</span>Add
+                Definition</primary-button
+              >
+            </div>
+          </new-definition>
+        </transition-group>
+        <primary-button>Submit</primary-button>
+      </form>
+      <div
+        v-else-if="isLoading"
+        class="
+          flex flex-col
+          gap-2
+          mt-8
+          justify-center
+          items-center
+          grow
+          dark:text-gray-400
+        "
+      >
+        <span
+          class="
+            material-symbols-outlined
+            text-9xl text-gray-300
+            dark:text-gray-600
+          "
+        >
+          hourglass_top
+        </span>
+        <p class="text-xl">Please Wait ...</p>
+      </div>
+    </div>
+  </content-wrapper>
 </template>
 
 <script>
@@ -77,6 +107,7 @@ export default {
           sample: "",
         },
       ],
+      isLoading: false,
       // api_id: "d156b09c",
       // api_key: "8ab08e6ccafaa7580af1731f57f02b5f",
       // language: "en-gb",
@@ -99,6 +130,7 @@ export default {
     },
 
     addWord() {
+      this.isLoading = true;
       this.axios
         .post("/api/vocab", { title: this.title, meaning: this.meaning })
         .then((response) => {
@@ -111,11 +143,18 @@ export default {
           }
         })
         .catch((error) => {
-          console.log(error);
+          this.$store.dispatch("setNotification", {
+            message: error.response.data.message,
+            type: "error",
+          });
+        })
+        .finally(() => {
+          this.isLoading = false;
         });
     },
 
     editWord() {
+      this.isLoading = true;
       this.axios
         .put("/api/vocab/" + this.id, {
           title: this.title,
@@ -131,7 +170,13 @@ export default {
           }
         })
         .catch((error) => {
-          console.log(error);
+          this.$store.dispatch("setNotification", {
+            message: error.response.data.message,
+            type: "error",
+          });
+        })
+        .finally(() => {
+          this.isLoading = false;
         });
     },
 
@@ -172,6 +217,27 @@ export default {
       });
     },
 
+    getData(id) {
+      this.isLoading = true;
+      this.axios
+        .get("/api/vocab/" + id)
+        .then((response) => {
+          if (response.status == 200) {
+            this.id = response.data.data.id;
+            this.title = response.data.data.title;
+            if (response.data.data.meanings.length > 0) {
+              this.meaning = response.data.data.meanings;
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
+    },
+
     // getMeaningApi() {
     //   this.axios
     //     .get(
@@ -188,20 +254,24 @@ export default {
 
   beforeMount() {
     if (this.$route.params.id) {
-      this.axios
-        .get("/api/vocab/" + this.$route.params.id)
-        .then((response) => {
-          if (response.status == 200) {
-            this.id = response.data.data.id;
-            this.title = response.data.data.title;
-            if (response.data.data.meanings.length > 0) {
-              this.meaning = response.data.data.meanings;
-            }
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      this.getData(this.$route.params.id);
+    }
+  },
+
+  updated() {
+    if (!this.$route.params.id) {
+      this.id = uuidv4();
+      this.title = "";
+      this.meaning = [
+        {
+          id: uuidv4(),
+          type: "",
+          meaning: "",
+          sample: "",
+        },
+      ];
+    } else {
+      this.getData(this.$route.params.id);
     }
   },
 };

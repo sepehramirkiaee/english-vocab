@@ -1,7 +1,7 @@
 <template>
   <div :class="{ dark: darkMode }" class="text-gray-600 relative">
     <div
-      class="w-full bg-gray-50 dark:bg-gray-900 min-h-screen relative font-sans"
+      class="w-full bg-gray-50 dark:bg-gray-900 min-h-screen relative font-sans flex flex-col"
     >
       <div id="dialog"></div>
       <router-view v-if="!isLoading" />

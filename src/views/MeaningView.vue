@@ -1,20 +1,14 @@
 <template>
-  <div
-    class="
-      flex flex-col
-      gap-4
-      md:w-1/2 md:mx-auto
-      lg:w-1/3
-      xl:w-1/4
-      h-screen
-      p-4
-      overflow-hidden
-      relative
-    "
-  >
-    <header-toolbar :backButton="true">Vocabulary</header-toolbar>
-    <div class="flex flex-col grow">
-      <meaning-item v-if="meaning" :meaning="meaning" mode="single"></meaning-item>
+  <header-toolbar :backButton="true">Vocabulary</header-toolbar>
+
+  <content-wrapper>
+    <user-side-menu></user-side-menu>
+    <div class="self-stretch flex flex-col gap-4 w-full">
+      <meaning-item
+        v-if="meaning"
+        :meaning="meaning"
+        mode="single"
+      ></meaning-item>
       <div
         v-else
         class="
@@ -38,9 +32,10 @@
         </span>
         <p class="text-xl">Please Wait ...</p>
       </div>
-    </div>
     <memory-score @next="score"></memory-score>
-  </div>
+      
+    </div>
+  </content-wrapper>
 </template>
 
 <script>

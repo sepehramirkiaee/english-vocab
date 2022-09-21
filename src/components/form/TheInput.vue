@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <field-wrapper>
     <label class="dark:text-gray-400 text-sm"><slot></slot></label>
     <input
       :value="modelValue"
@@ -12,8 +12,7 @@
         w-full
         rounded
         p-2
-        text-sm
-        text-gray-500
+        text-sm text-gray-500
         placeholder:text-gray-300
         focus:border-blue-700
         focus:ring-2
@@ -28,10 +27,11 @@
         dark:placeholder:text-gray-500
       "
     />
-  </div>
+  </field-wrapper>
 </template>
 
 <script>
+
 export default {
   props: {
     modelValue: {
