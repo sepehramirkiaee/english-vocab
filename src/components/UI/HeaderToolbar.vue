@@ -1,6 +1,9 @@
 <template>
   <div
-    :class="{ 'flex items-center justify-between p-4 md:mx-auto md:px-4 md:w-1/2 lg:w-full lg:px-8 lg:py-2 lg:bg-white lg:dark:bg-black lg:shadow-sm lg:border-b lg:border-gray-300 lg:dark:border-gray-700': getAuthStatus }"
+    :class="{
+      'flex items-center justify-between p-4 md:mx-auto md:px-4 md:w-1/2 lg:w-full lg:px-8 lg:py-2 lg:bg-white lg:dark:bg-black lg:shadow-sm lg:border-b lg:border-gray-300 lg:dark:border-gray-700':
+        getAuthStatus,
+    }"
   >
     <span
       v-if="backButton"
@@ -17,7 +20,13 @@
 
     <span
       v-else-if="getAuthStatus"
-      class="material-symbols-outlined dark:text-white w-10 cursor-pointer lg:hidden"
+      class="
+        material-symbols-outlined
+        dark:text-white
+        w-10
+        cursor-pointer
+        lg:hidden
+      "
       @click="toggleMenu"
       >menu</span
     >
@@ -37,52 +46,20 @@
     >
       <slot></slot>
     </h3>
-    <div
-      v-if="getAuthStatus"
-      class="
-        w-10
-        bg-gray-300
-        rounded-full
-        h-6
-        shadow-inner
-        transition
-        duration-300
-        cursor-pointer
-      "
-      :class="{ '!bg-blue-500': darkMode }"
-      @click="toggleDarkMode"
-    >
-      <div
-        class="
-          w-4
-          h-4
-          bg-white
-          m-1
-          rounded-full
-          shadow-md
-          transition-all
-          duration-300
-        "
-        :class="{ 'ml-5': darkMode }"
-      ></div>
-    </div>
-    <input
-      type="checkbox"
-      class="hidden"
-      :checked="darkMode"
-      @change="toggleDarkMode"
-    />
+    <user-profile v-if="getAuthStatus"></user-profile>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import UserMenu from "./UserMenu.vue";
+import UserProfile from "./UserProfile.vue";
 
 export default {
   props: ["backButton"],
   components: {
     UserMenu,
+    UserProfile,
   },
 
   data() {
@@ -92,12 +69,10 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["darkMode", "getAuthStatus"]),
+    ...mapGetters(["getAuthStatus"]),
   },
 
   methods: {
-    ...mapActions(["toggleDarkMode"]),
-
     toggleMenu() {
       this.showUserMenu = !this.showUserMenu;
     },
@@ -105,7 +80,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .menu-enter-active,
 .menu-leave-active {
   @apply transition-all;

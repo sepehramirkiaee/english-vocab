@@ -117,7 +117,7 @@ router.beforeEach((to, from, next) => {
       axios
         .get("/api/user").then(res => {
           if (res.status == 200) {
-            store.dispatch("setAuthentication");
+            store.dispatch("setAuthentication",res.data);
           }
         }).finally(() => {
           store.dispatch('setIsLoading', false)

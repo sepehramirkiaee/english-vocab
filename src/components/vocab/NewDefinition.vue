@@ -1,5 +1,5 @@
 <template>
-  <primary-card class="p-4 flex flex-col gap-4">
+  <primary-card class="p-6 flex flex-col gap-6">
     
     <div>
       <the-select v-model="type" :options="typeOptions" @change="changeType"

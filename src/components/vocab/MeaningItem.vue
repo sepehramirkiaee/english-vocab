@@ -53,13 +53,14 @@
           -translate-x-1/2 -translate-y-1/2
           flex
           items-center
-          gap-1
+          gap-2
           border
           px-4
           py-2
           rounded-md
           bg-white
-          dark:bg-gray-700
+          dark:bg-gray-800
+          dark:border-gray-500
           whitespace-nowrap
           cursor-pointer
         "

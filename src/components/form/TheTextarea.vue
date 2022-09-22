@@ -6,9 +6,9 @@
       @input="updateValue"
       :placeholder="placeholder"
       class="
-        border border-gray-200
+        border border-gray-300 shadow-sm
         w-full
-        rounded
+        rounded-md
         p-2
         text-sm text-gray-500
         placeholder:text-gray-300

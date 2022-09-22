@@ -8,7 +8,7 @@
         @submit.prevent="handleFunction"
         class="flex flex-col gap-3 w-full"
       >
-        <primary-card class="p-4">
+        <primary-card class="p-6">
           <the-input v-model.trim="title">Enter The Word</the-input>
         </primary-card>
         <transition-group name="list">
@@ -44,16 +44,16 @@
                 @click="addDefinition"
                 class="
                   self-end
-                  bg-emerald-600
-                  dark:bg-emerald-700
-                  hover:bg-emerald-500
+                  !bg-white
                   flex
                   items-center
                   justify-center
                   gap-2
+                  !text-blue-800
+                  dark:!bg-gray-800 dark:!text-blue-400
                 "
                 type="button"
-                ><span class="material-symbols-outlined text-sm">add</span>Add
+                ><span class="material-symbols-outlined">add</span>Add
                 Definition</primary-button
               >
             </div>

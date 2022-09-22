@@ -12,10 +12,17 @@
       shrink-0
     "
   >
-    <div v-for="item in menu" :key="item.title" class="p-2">
+    <div v-for="item in getUserMenu" :key="item.title" class="p-2">
       <router-link
         :to="{ name: item.link.name }"
-        class="flex items-center gap-2 dark:text-gray-300 whitespace-nowrap"
+        class="
+          flex
+          items-center
+          gap-2
+          dark:text-gray-300
+          whitespace-nowrap
+          transition-all
+        "
       >
         <span class="material-symbols-outlined !no-underline">{{
           item.icon
@@ -27,46 +34,16 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
-  data() {
-    return {
-      menu: [
-        {
-          title: "My List",
-          icon: "view_agenda",
-          link: {
-            name: "vocab",
-          },
-        },
-        {
-          title: "Practice",
-          icon: "view_carousel",
-          link: {
-            name: "practice",
-          },
-        },
-        {
-          title: "Add Word",
-          icon: "variables",
-          link: {
-            name: "addWord",
-          },
-        },
-        {
-          title: "Logout",
-          icon: "logout",
-          link: {
-            name: "logout",
-          },
-        },
-      ],
-    };
+  computed: {
+    ...mapGetters(["getUserMenu"]),
   },
 };
 </script>
 
-<style>
+<style scoped>
 .router-link-active {
-  @apply after:content-[''] after:rounded-full after:dark:bg-blue-600 after:bg-blue-800 after:w-2 after:h-2 transition-all after:shrink-0;
+  @apply text-blue-700 dark:text-blue-400;
 }
 </style>

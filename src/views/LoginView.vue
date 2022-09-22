@@ -53,8 +53,12 @@ export default {
           })
           .then((response) => {
             if (response.status == 200) {
-              this.$store.dispatch("setAuthentication");
-              this.$router.push({ name: "vocab" });
+              this.axios.get("/api/user").then((res) => {
+                if (res.status == 200) {
+                  this.$store.dispatch("setAuthentication", res.data);
+                  this.$router.push({ name: "vocab" });
+                }
+              });
             } else {
               this.$store.dispatch("setNotification", {
                 message: "Something went wrong!",
