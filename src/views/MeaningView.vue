@@ -54,7 +54,6 @@ export default {
 
   methods: {
     next(score, id) {
-      console.log(score,id)
       this.axios.put("/api/score", { id, score });
       this.$router.push({ name: "vocab" });
     },
