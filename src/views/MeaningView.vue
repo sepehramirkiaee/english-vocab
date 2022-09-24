@@ -32,8 +32,7 @@
         </span>
         <p class="text-xl">Please Wait ...</p>
       </div>
-    <memory-score @next="score"></memory-score>
-      
+      <memory-score @next="next($event, id)"></memory-score>
     </div>
   </content-wrapper>
 </template>
@@ -54,7 +53,9 @@ export default {
   },
 
   methods: {
-    score() {
+    next(score, id) {
+      console.log(score,id)
+      this.axios.put("/api/score", { id, score });
       this.$router.push({ name: "vocab" });
     },
   },
