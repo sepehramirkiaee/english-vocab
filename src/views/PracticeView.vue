@@ -55,7 +55,7 @@
               ></meaning-item>
             </transition>
           </div>
-          <memory-score @next="next"></memory-score>
+          <memory-score @next="next($event, item.id)"></memory-score>
         </div>
       </div>
       <div
@@ -162,11 +162,12 @@ export default {
   methods: {
     ...mapActions(["setVocabList", "addToVocabList"]),
 
-    next() {
+    next(score, id) {
       if (!this.isLoadingMore) {
         if (this.index + 1 < this.vocabList.length) {
           this.isLoadingMore = true;
           this.showMainItem = false;
+          this.axios.put("/api/score", { id, score });
           setTimeout(() => {
             this.index++;
             this.showMainItem = true;

@@ -24,13 +24,14 @@
           right-0
           border border-gray-200
           dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300
+          z-40
         "
       >
-        <div class="flex items-center gap-2 whitespace-nowrap text-sm">
+        <div class="flex items-center gap-2 whitespace-nowrap text-sm justify-between">
           <span>Dark Mode</span>
           <dark-mode></dark-mode>
         </div>
-        <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
+        <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600 flex flex-col gap-4">
           <div
             v-for="item in getUserProfileMenu"
             :key="item.title"

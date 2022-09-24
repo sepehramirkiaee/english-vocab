@@ -8,6 +8,7 @@ import VocabView from '../views/VocabView.vue'
 import MeaningView from '../views/MeaningView.vue'
 import PracticeView from '../views/PracticeView.vue'
 import NewWord from '../views/NewWord.vue'
+import ChangePassword from '../views/ChangePassword.vue'
 import NotFound from '../error-pages/NotFound.vue'
 const routes = [
   {
@@ -81,6 +82,14 @@ const routes = [
     path: '/learn/vocab/edit/:id',
     name: 'editWord',
     component: NewWord,
+    meta: {
+      needAuth: true
+    },
+  },
+  {
+    path: '/profile/change-password',
+    name: 'changePassword',
+    component: ChangePassword,
     meta: {
       needAuth: true
     },

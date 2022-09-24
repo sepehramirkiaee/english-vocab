@@ -26,6 +26,13 @@ export default {
         ],
         userProfileMenu: [
             {
+                title: "Change Password",
+                icon: "key",
+                link: {
+                    name: "changePassword",
+                },
+            },
+            {
                 title: "Logout",
                 icon: "logout",
                 link: {

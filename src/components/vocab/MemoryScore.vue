@@ -1,7 +1,7 @@
 <template>
   <div class="flex my-4 gap-2">
     <div
-      @click="next"
+      @click="next('notknow')"
       class="bg-rose-200 dark:bg-rose-800 active:dark:bg-rose-900 btn-action"
     >
       <span
@@ -16,7 +16,7 @@
       </span>
     </div>
     <div
-      @click="next"
+      @click="next('notsure')"
       class="btn-action bg-cyan-200 dark:bg-cyan-700 active:dark:bg-cyan-900"
     >
       <span
@@ -31,7 +31,7 @@
       </span>
     </div>
     <div
-      @click="next"
+      @click="next('sure')"
       class="btn-action bg-lime-200 dark:bg-lime-600 active:dark:bg-lime-900"
     >
       <span
@@ -53,8 +53,8 @@ export default {
   props: ["isLoading"],
   emits: ["next"],
   methods: {
-    next() {
-      this.$emit("next");
+    next(score) {
+      this.$emit("next",score);
     },
   },
 };
