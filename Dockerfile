@@ -1,7 +1,11 @@
-FROM node:14.14.0
-
+FROM node:alpine as build-stage
 WORKDIR /app
-
+COPY package*.json ./
 RUN npm install
+COPY ./ .
+RUN npm run build
 
-CMD ["npm", "run", "serve"]
+FROM nginx:alpine as production-stage
+RUN mkdir /app
+COPY --from=build-stage /app/dist /app
+COPY nginx.conf /etc/nginx/nginx.conf
