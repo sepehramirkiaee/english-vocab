@@ -145,7 +145,7 @@ export default {
       const formValidation = this.validateForm();
       if (formValidation) {
         this.axios
-          .post("/user/password", {
+          .put("/user/password", {
             current_password: this.current_password,
             password: this.password,
             password_confirmation: this.passwordConfirmation,
