@@ -7,7 +7,7 @@ import store from './store'
 import './assets/tailwind.css'
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://myvocab.ir:8088';
+axios.defaults.baseURL = process.env.BASE_URL;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers['Access-Control-Allow-Origin'] = '*';
 
