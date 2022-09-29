@@ -5,7 +5,7 @@ module.exports = defineConfig({
     allowedHosts: ['myvocab.ir']
   },
   pwa: {
-    name: 'Vocab',
+    name: 'My Vocab',
     themeColor: '#2563EB',
     msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',
