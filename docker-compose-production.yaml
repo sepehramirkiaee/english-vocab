@@ -10,3 +10,4 @@ services:
     volumes:
       - ./dist:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
+      
