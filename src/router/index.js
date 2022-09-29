@@ -122,7 +122,6 @@ router.control = (to, _, next) => {
 router.beforeEach((to, from, next) => {
   if (!from.name && to.name !== 'notFound') {
     store.dispatch('setIsLoading', true)
-    console.log('a')
     axios.get("/sanctum/csrf-cookie").then(() => {
       axios
         .get("/api/user").then(res => {
