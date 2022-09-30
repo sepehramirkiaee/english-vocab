@@ -1,0 +1,18 @@
+{
+    "id": 1234567890,
+    "title": "core strength",
+    "meaning": [
+        {
+            "id": 123,
+            "type": "noun",
+            "meaning": "the strength of the muscles of the torso, which helps determine posture",
+            "sample": "My back's been hurting, so my physiotherapist recommended I work on core strength."
+        },
+        {
+            "id": 456,
+            "type": "verb",
+            "meaning": "which helps determine posture",
+            "sample": "so my physiotherapist recommended I work on core strength."
+        }
+    ]
+}
