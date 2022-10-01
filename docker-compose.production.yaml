@@ -1,6 +1,6 @@
 version: '3'
 services:
-  nginx:
+  app:
     image: nginx:alpine
     restart: unless-stopped
     tty: true
@@ -10,11 +10,4 @@ services:
     volumes:
       - ./dist:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
-      - ./certbot/www:/var/www/certbot/
-      - ./certbot/conf/:/etc/nginx/ssl/
-  certbot:
-    image: certbot/certbot:latest
-    volumes:
-      - ./certbot/www/:/var/www/certbot/:rw
-      - ./certbot/conf/:/etc/letsencrypt/
       
